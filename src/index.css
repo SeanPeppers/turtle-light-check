@@ -14,14 +14,15 @@ body { margin: 0; }
 .hero { min-height: 62svh; display: grid; place-items: center; text-align: center; padding: 0 1rem; }
 .hero-text { max-width: 40rem; text-shadow: var(--legible); }
 h1 {
-  font-family: Fraunces, Georgia, serif; font-weight: 700; letter-spacing: -0.02em;
-  font-size: clamp(2.6rem, 8vw, 5rem); line-height: 1; margin: 0 0 0.9rem;
+  font-family: Fredoka, 'Baloo 2', system-ui, sans-serif; font-weight: 700; letter-spacing: 0.01em;
+  font-size: clamp(2.8rem, 8.5vw, 5.4rem); line-height: 1.15; margin: 0 0 0.9rem;
+  padding: 0 0.1em 0.12em; /* room for the g descender: gradient text is clipped to the box */
   background: linear-gradient(180deg, #fff 30%, #ffe2b0 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
   text-shadow: none; /* text-shadow would show through the transparent gradient fill */
   filter: drop-shadow(0 2px 18px rgb(255 181 71 / 0.35)) drop-shadow(0 2px 3px rgb(0 0 0 / 0.8));
 }
 .hero-text p { font-size: clamp(1rem, 2.2vw, 1.2rem); line-height: 1.5; margin: 0 auto 1.5rem; max-width: 32rem; color: var(--ink); }
-h2 { font-family: Fraunces, Georgia, serif; font-weight: 500; font-size: 1.7rem; margin: 0 0 0.5rem; letter-spacing: -0.01em; }
+h2 { font-family: Fredoka, system-ui, sans-serif; font-weight: 600; font-size: 1.8rem; margin: 0 0 0.5rem; letter-spacing: 0.01em; }
 
 /* Buttons: amber pill = "keep it long" */
 .btn, .upload {
