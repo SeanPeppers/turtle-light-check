@@ -4,8 +4,8 @@
     <spherical_coordinates>
       <surface_model>EARTH_WGS84</surface_model>
       <world_frame_orientation>ENU</world_frame_orientation>
-      <latitude_deg>26.45</latitude_deg>
-      <longitude_deg>-81.948</longitude_deg>
+      <latitude_deg>26.45101</latitude_deg>
+      <longitude_deg>-81.95197</longitude_deg>
       <elevation>0</elevation>
     </spherical_coordinates>
     <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>

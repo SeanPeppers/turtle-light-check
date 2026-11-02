@@ -31,7 +31,7 @@ import locate
 import scene
 
 MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite")
-HEADING_DEG = 0.0  # drone faces north, inland
+HEADING_DEG = scene.INLAND_BEARING_DEG  # the drone faces inland
 HERE = Path(__file__).parent
 CAPTURES = HERE / "captures"
 
@@ -88,12 +88,18 @@ class Drone:
             "--reqtype", "gz.msgs.Pose", "--reptype", "gz.msgs.Boolean",
             "--timeout", "3000", "--req", req,
         ]
+        detail = ""
         for _ in range(3):
-            out = subprocess.run(cmd, capture_output=True, text=True)
+            try:
+                out = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
+            except subprocess.TimeoutExpired:
+                detail = "gz service hung for 10 s"
+                continue
             if "data: true" in out.stdout:
                 return
+            detail = f"{out.stdout.strip()} {out.stderr.strip()}"
             time.sleep(0.5)
-        raise RuntimeError(f"set_pose failed 3 times: {out.stdout.strip()} {out.stderr.strip()}")
+        raise RuntimeError(f"set_pose failed 3 times: {detail}")
 
     def frame_after(self, t, timeout=15.0):
         end = time.monotonic() + timeout
@@ -105,8 +111,24 @@ class Drone:
         raise TimeoutError("no camera frame; is the simulation running (gz sim -r)?")
 
 
+def valid_light(d):
+    box = d.get("box_2d") if isinstance(d, dict) else None
+    return (
+        isinstance(box, list)
+        and len(box) == 4
+        and all(isinstance(v, (int, float)) and 0 <= v <= 1000 for v in box)
+        and box[0] < box[2]
+        and box[1] < box[3]
+    )
+
+
 def ask_gemini(client, pngs):
-    """One request for a batch of images; returns a list of light lists, one per image."""
+    """One request for a batch of images.
+
+    Returns one entry per image: a list of lights, or None when Gemini skipped that
+    image or answered with something unusable, so the caller can retry it later
+    instead of caching "no lights".
+    """
     prompt = PROMPT.format(n=len(pngs), last=len(pngs) - 1)
     parts = [types.Part.from_bytes(data=b, mime_type="image/png") for b in pngs] + [prompt]
     config = types.GenerateContentConfig(response_mime_type="application/json", temperature=0)
@@ -115,23 +137,28 @@ def ask_gemini(client, pngs):
             resp = client.models.generate_content(model=MODEL, contents=parts, config=config)
             break
         except errors.APIError as e:
-            # Overload (503) clears in seconds; a 429 here is usually the daily cap, so retrying only burns time.
-            if e.code == 429:
+            # A per-day 429 will not clear today, so stop; per-minute 429s and 5xx overloads clear in seconds.
+            if e.code == 429 and "PerDay" in str(e):
                 raise SystemExit(
-                    f"Gemini quota exhausted for {MODEL}. Set GEMINI_MODEL in .env to another model, "
+                    f"Gemini daily quota exhausted for {MODEL}. Set GEMINI_MODEL in .env to another model, "
                     "use a teammate's key, or enable billing. Cached waypoints rerun for free."
                 ) from e
-            if e.code < 500 or attempt == 2:
+            if (e.code != 429 and e.code < 500) or attempt == 2:
                 raise
             print(f"  Gemini {e.code}, retrying in {10 * (attempt + 1)}s")
             time.sleep(10 * (attempt + 1))
-    data = json.loads(resp.text)
+    out = [None] * len(pngs)
+    try:
+        data = json.loads(resp.text or "")
+    except json.JSONDecodeError:
+        print("  Gemini returned invalid JSON; these images will be retried on the next run")
+        return out
     entries = data.get("images", []) if isinstance(data, dict) else data
-    out = [[] for _ in pngs]
-    for entry in entries:
+    for entry in entries if isinstance(entries, list) else []:
         i = entry.get("index") if isinstance(entry, dict) else None
-        if isinstance(i, int) and 0 <= i < len(pngs):
-            out[i] = [d for d in entry.get("lights", []) if isinstance(d, dict) and len(d.get("box_2d", [])) == 4]
+        lights = entry.get("lights") if isinstance(entry, dict) else None
+        if isinstance(i, int) and 0 <= i < len(pngs) and out[i] is None and isinstance(lights, list):
+            out[i] = [d for d in lights if valid_light(d)]
     return out
 
 
@@ -167,11 +194,16 @@ def detect(client, frames):
         batch = todo[start : start + BATCH_SIZE]
         results = ask_gemini(client, [f["png"] for f in batch])
         for f, dets in zip(batch, results):
-            cache[cache_key(f["x"])] = dets
-        CACHE.write_text(json.dumps(cache))
-        print(f"  Gemini request {start // BATCH_SIZE + 1}: {len(batch)} images")
+            if dets is not None:
+                cache[cache_key(f["x"])] = dets
+        tmp = CACHE.with_suffix(".tmp")
+        tmp.write_text(json.dumps(cache))
+        tmp.replace(CACHE)
+        skipped = sum(d is None for d in results)
+        note = f", {skipped} skipped by Gemini" if skipped else ""
+        print(f"  Gemini request {start // BATCH_SIZE + 1}: {len(batch)} images{note}")
     for f in frames:
-        f["detections"] = cache[cache_key(f["x"])]
+        f["detections"] = cache.get(cache_key(f["x"]), [])
         del f["png"]
         print(f"waypoint {f['waypoint']:2d} x={f['x']:+4d}: Gemini saw {len(f['detections'])} lights")
 
@@ -223,6 +255,8 @@ def write_geojson(frames, lights, fixtures):
             fid = f"{fid}-{n}"
         ids.add(fid)
         views = [view(frames[fi], frames[fi]["detections"][di]) for fi, di in sorted(light["views"])]
+        # The photo where the light sits nearest the centre shows it most clearly.
+        central = min(views, key=lambda v: abs((v["box_2d"][1] + v["box_2d"][3]) / 2 - 500))
         features.append(
             {
                 "type": "Feature",
@@ -239,8 +273,8 @@ def write_geojson(frames, lights, fixtures):
                     "height_m": round(z, 1),
                     "distance_from_drone_m": round(y - scene.DRONE_Y, 1),
                     "method": "triangulated",
-                    "image": views[0]["image"],
-                    "box_2d": views[0]["box_2d"],
+                    "image": central["image"],
+                    "box_2d": central["box_2d"],
                     "views": views,
                     "captured_at": now,
                 },
