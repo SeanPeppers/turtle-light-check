@@ -103,4 +103,6 @@ assert abs(math.hypot(east, north) - 100) < 1e-6
 assert abs(math.degrees(math.atan2(east, north)) - scene.INLAND_BEARING_DEG) < 1e-6
 lat, lon = scene.to_lat_lon(100, 0)
 assert lat < scene.ORIGIN_LAT and lon > scene.ORIGIN_LON  # along the shore is south-east
+x, y = scene.from_lat_lon(*scene.to_lat_lon(37.5, -12.25))
+assert abs(x - 37.5) < 1e-6 and abs(y + 12.25) < 1e-6
 print("ok")
