@@ -36,10 +36,22 @@ UNITS_PER_FLOOR = 4
 
 # Which units leave beach-facing lights on, keyed by (building index, floor, unit).
 LIT_UNITS = {(0, 2, 1), (1, 3, 2), (1, 1, 0), (3, 0, 3), (3, 2, 2), (4, 3, 1)}
+# A lit unit behind tinted "turtle glass" (45% transmittance or less): it glows dimly and is compliant.
+TURTLE_GLASS_UNITS = {(2, 1, 1)}
 BUILDING_XS = [-64.0, -32.0, 0.0, 32.0, 64.0]
 STREETLIGHT_XS = [-48.0, 16.0, 48.0]
-STREETLIGHT_Y = 26.0
+STREETLIGHT_Y = 29.0
 STREETLIGHT_H = 7.0
+
+# The dune line; the sand seaward of it is nesting habitat.
+DUNE_Y = 26.0
+# Lee County's shadow rule: a shadow cast by artificial light on an object in nesting habitat is a
+# presumed violation. A rooftop floodlight on Condo 4 lights the beach and throws the shadow of a
+# beach umbrella onto the sand, inside the drone camera's view.
+FLOODLIGHT_POS = (32.0, BUILDING_Y - BUILDING_SIZE[1] / 2 - 0.6, 14.0)
+FLOODLIGHT_AIM = (32.0, 12.0, 0.0)
+UMBRELLA_POS = (34.0, 21.5)
+UMBRELLA_H = 2.2
 
 # Flight path runs a full camera footprint past the end buildings so every light is seen in several frames.
 WAYPOINT_SPACING_M = 8
@@ -79,7 +91,8 @@ def fixtures() -> list[dict]:
                         "building": f"Condo {b + 1}",
                         "unit": f"{floor + 1}0{unit + 1}",
                         "kind": "window",
-                        "lit": (b, floor, unit) in LIT_UNITS,
+                        "lit": (b, floor, unit) in LIT_UNITS or (b, floor, unit) in TURTLE_GLASS_UNITS,
+                        "tinted": (b, floor, unit) in TURTLE_GLASS_UNITS,
                         "pos": (x, face_y, z),
                         "notify": "resident",
                     }
@@ -92,11 +105,30 @@ def fixtures() -> list[dict]:
                 "unit": None,
                 "kind": "streetlight",
                 "lit": True,
+                "tinted": False,
                 "pos": (sx, STREETLIGHT_Y, STREETLIGHT_H),
                 "notify": "city",
             }
         )
+    out.append(
+        {
+            "id": "condo-4-floodlight",
+            "building": "Condo 4 rooftop floodlight",
+            "unit": None,
+            "kind": "floodlight",
+            "lit": True,
+            "tinted": False,
+            "pos": FLOODLIGHT_POS,
+            "notify": "resident",
+        }
+    )
     return out
+
+
+def violations() -> list[dict]:
+    """Ground truth: lights that break the rules (lit, and not behind turtle glass)."""
+    return [f for f in fixtures() if f["lit"] and not f["tinted"]]
+
 
 
 def _box(name, pose, size, color, emissive=None, static=True):
@@ -128,12 +160,48 @@ def _point_light(name, pos, color="1 0.85 0.55 1", rng=25):
     </light>"""
 
 
+def _spot_light(name, pos, aim):
+    x, y, z = pos
+    dx, dy, dz = (a - b for a, b in zip(aim, pos))
+    return f"""
+    <light type="spot" name="{name}">
+      <pose>{x} {y} {z} 0 0 0</pose>
+      <diffuse>1 0.97 0.9 1</diffuse>
+      <specular>0.3 0.3 0.3 1</specular>
+      <direction>{dx} {dy} {dz}</direction>
+      <attenuation><range>80</range><constant>0.2</constant><linear>0.01</linear><quadratic>0.0005</quadratic></attenuation>
+      <spot><inner_angle>0.5</inner_angle><outer_angle>0.9</outer_angle><falloff>1</falloff></spot>
+      <cast_shadows>true</cast_shadows>
+    </light>"""
+
+
+def _umbrella():
+    ux, uy = UMBRELLA_POS
+    return f"""
+    <model name="beach_umbrella">
+      <static>true</static>
+      <pose>{ux} {uy} 0 0 0 0</pose>
+      <link name="link">
+        <visual name="pole">
+          <pose>0 0 {UMBRELLA_H / 2} 0 0 0</pose>
+          <geometry><cylinder><radius>0.05</radius><length>{UMBRELLA_H}</length></cylinder></geometry>
+          <material><ambient>0.8 0.8 0.8 1</ambient><diffuse>0.8 0.8 0.8 1</diffuse></material>
+        </visual>
+        <visual name="canopy">
+          <pose>0 0 {UMBRELLA_H} 0 0 0</pose>
+          <geometry><cylinder><radius>1.3</radius><length>0.15</length></cylinder></geometry>
+          <material><ambient>0.85 0.2 0.2 1</ambient><diffuse>0.85 0.2 0.2 1</diffuse></material>
+        </visual>
+      </link>
+    </model>"""
+
+
 def world_sdf() -> str:
     parts = []
     parts.append(_box("ocean", (0, -60, -0.4), (400, 100, 0.2), "0.02 0.06 0.12 1"))
     parts.append(_box("sand", (0, 25, -0.5), (400, 70, 0.2), "0.35 0.32 0.25 1"))
     for i, x in enumerate(range(-90, 91, 30)):
-        parts.append(_box(f"dune_{i}", (x, 12, 0.6), (26, 5, 1.6), "0.25 0.27 0.18 1"))
+        parts.append(_box(f"dune_{i}", (x, DUNE_Y, 0.6), (26, 5, 1.6), "0.25 0.27 0.18 1"))
 
     w, d, h = BUILDING_SIZE
     for b, bx in enumerate(BUILDING_XS):
@@ -143,11 +211,17 @@ def world_sdf() -> str:
     for f in fixtures():
         x, y, z = f["pos"]
         if f["kind"] == "window":
-            if f["lit"]:
+            if f["tinted"]:
+                # Turtle glass passes at most 45% of the room light and tints it bronze.
+                parts.append(_box(f["id"], (x, y, z), (win_w, 0.1, 1.8), "0.2 0.12 0.06 1", "0.13 0.075 0.03 1"))
+            elif f["lit"]:
                 parts.append(_box(f["id"], (x, y, z), (win_w, 0.1, 1.8), "1 0.85 0.5 1", "1 0.85 0.5 1"))
                 parts.append(_point_light(f"{f['id']}_light", (x, y - 1.0, z)))
             else:
                 parts.append(_box(f["id"], (x, y, z), (win_w, 0.1, 1.8), "0.05 0.06 0.08 1"))
+        elif f["kind"] == "floodlight":
+            parts.append(_box(f["id"], (x, y, z), (1.4, 0.8, 0.8), "1 1 0.95 1", "1 1 0.95 1"))
+            parts.append(_spot_light(f"{f['id']}_light", (x, y - 0.6, z - 0.2), FLOODLIGHT_AIM))
         else:
             parts.append(_box(f"{f['id']}_pole", (x, y, z / 2), (0.3, 0.3, z), "0.3 0.3 0.3 1"))
             parts.append(_box(f["id"], (x, y, z + 0.2), (1.2, 0.6, 0.3), "1 0.95 0.8 1", "1 0.95 0.8 1"))
@@ -175,6 +249,7 @@ def world_sdf() -> str:
       </link>
     </model>"""
     parts.append(drone)
+    parts.append(_umbrella())
 
     return f"""<?xml version="1.0"?>
 <sdf version="1.9">
@@ -196,7 +271,7 @@ def world_sdf() -> str:
       <ambient>0.05 0.05 0.08 1</ambient>
       <background>0.01 0.01 0.03 1</background>
       <grid>false</grid>
-      <shadows>false</shadows>
+      <shadows>true</shadows>
     </scene>
     <light type="directional" name="moon">
       <pose>0 -50 80 0 0 0</pose>
@@ -214,5 +289,4 @@ def world_sdf() -> str:
 if __name__ == "__main__":
     out = Path(__file__).with_name("world.sdf")
     out.write_text(world_sdf())
-    lit = sum(f["lit"] for f in fixtures())
-    print(f"wrote {out} ({len(fixtures())} fixtures, {lit} lit)")
+    print(f"wrote {out} ({len(fixtures())} fixtures, {len(violations())} violating lights)")

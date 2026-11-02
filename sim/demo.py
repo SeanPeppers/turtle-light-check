@@ -12,6 +12,7 @@ import argparse
 import json
 import math
 import os
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -33,7 +34,8 @@ STEP_M = 0.4  # drone travel per frame, 12 m/s at 30 fps
 PAUSE_FRAMES = 8  # hover at each waypoint while the photo is "taken"
 END_FRAMES = 4 * FPS
 # Gazebo writes chase frames here; reading files avoids an in-process image subscription,
-# which makes gz-transport service calls from Python stall.
+# which makes gz-transport service calls from Python stall. Gazebo only renders a camera
+# while something subscribes to it, so a separate process holds a no-op subscription.
 CHASE_DIR = HERE / ".chase_frames"
 CHASE_W, CHASE_H = 1280, 720
 OUT_W, OUT_H = 1920, 1080
@@ -41,6 +43,23 @@ OUT_W, OUT_H = 1920, 1080
 RESIDENT_RGB = (255, 70, 50)
 CITY_RGB = (255, 165, 0)
 RAY_RGB = (90, 220, 255)
+COMPLIANT_RGB = (52, 199, 89)
+
+
+def kind(light):
+    """'compliant', 'city' or 'resident': drives colours, counters and the log."""
+    p = light["props"]
+    if p.get("compliant"):
+        return "compliant"
+    return "city" if p["notify"] == "city" else "resident"
+
+
+MARKER_RGB = {"compliant": COMPLIANT_RGB, "city": CITY_RGB, "resident": RESIDENT_RGB}
+RAY_COLOR = {"compliant": COMPLIANT_RGB, "city": CITY_RGB, "resident": RAY_RGB}
+
+
+def box_rgb(det):
+    return COMPLIANT_RGB if det.get("compliant") else (255, 230, 0)
 BG = (10, 14, 28)
 PANEL = (22, 28, 48)
 TEXT = (230, 236, 245)
@@ -289,11 +308,11 @@ class Overlay:
         d.rectangle((px - 2, py - 2, px + pw + 2, py + ph + 2), fill=PANEL)
         if last_wp is not None:
             out.paste(self.photo(last_wp).resize((pw, ph)), (px, py))
-            for det in self.waypoints[last_wp]["detections"]:
+            for det in (d for d in self.waypoints[last_wp]["detections"] if d.get("kind") != "shadow"):
                 ymin, xmin, ymax, xmax = det["box_2d"]
                 box = (px + xmin / 1000 * pw - 3, py + ymin / 1000 * ph - 3, px + xmax / 1000 * pw + 3, py + ymax / 1000 * ph + 3)
-                d.rectangle(box, outline=(255, 230, 0), width=3)
-            n = len(self.waypoints[last_wp]["detections"])
+                d.rectangle(box, outline=box_rgb(det), width=3)
+            n = sum(d.get("kind") != "shadow" for d in self.waypoints[last_wp]["detections"])
             caption = f"Drone camera  ·  waypoint {last_wp}  ·  Gemini found {n} light{'s' * (n != 1)}"
         else:
             caption = "Drone camera  ·  waiting for first photo"
@@ -312,7 +331,7 @@ class Overlay:
         d.line((*start, *here), fill=(255, 255, 255), width=3)
         for light in found:
             lx, ly = at(light["pos"][0], light["pos"][1])
-            rgb = CITY_RGB if light["props"]["notify"] == "city" else RESIDENT_RGB
+            rgb = MARKER_RGB[kind(light)]
             d.ellipse((lx - 7, ly - 7, lx + 7, ly + 7), fill=rgb, outline=(255, 255, 255), width=2)
         d.ellipse((here[0] - 9, here[1] - 9, here[0] + 9, here[1] + 9), fill=(90, 220, 255), outline=(255, 255, 255), width=2)
         d.rectangle((mx0, my0, mx0 + MAP_W, my0 + 30), fill=(10, 14, 28))
@@ -320,11 +339,13 @@ class Overlay:
         d.text((mx0 + MAP_W - 6, my0 + MAP_H - 4), ATTRIBUTION, font=self.f_tiny, fill=(200, 200, 210), anchor="rd")
 
         # Counters and the event log.
-        residents = sum(lt["props"]["notify"] == "resident" for lt in found)
-        city = len(found) - residents
-        d.text((1340, 830), f"{len(found)} lights located", font=self.f_label, fill=TEXT)
+        counts = {k: sum(kind(lt) == k for lt in found) for k in MARKER_RGB}
+        residents, city = counts["resident"], counts["city"]
+        violations = residents + city
+        d.text((1340, 830), f"{violations} violating lights located", font=self.f_label, fill=TEXT)
         d.text((1340, 860), f"{residents} residents to notify", font=self.f_small, fill=RESIDENT_RGB)
         d.text((1340, 886), f"{city} city streetlights to report", font=self.f_small, fill=CITY_RGB)
+        d.text((1340, 912), f"{counts['compliant']} turtle-glass window passed", font=self.f_small, fill=COMPLIANT_RGB)
 
         d.rectangle((30, 830, 1310, 1050), fill=PANEL)
         d.text((48, 842), "Located lights", font=self.f_label, fill=TEXT)
@@ -334,11 +355,12 @@ class Overlay:
         if end_alpha > 0:
             card = Image.new("RGB", (OUT_W, OUT_H), BG)
             cd = ImageDraw.Draw(card)
-            cd.text((160, 260), f"{len(found)} beach-visible lights located", font=self.f_big, fill=TEXT)
-            cd.text((160, 360), f"{residents} residents get a fix-it notice  ·  {city} streetlights reported to the city", font=font(34), fill=MUTED)
-            cd.text((160, 430), "Each light is triangulated from the drone's GPS track and Gemini's boxes in several photos.", font=font(28), fill=MUTED)
-            cd.text((160, 560), "Turtle Light Check", font=font(48, True), fill=RAY_RGB)
-            cd.text((160, 630), "Gazebo  ·  Gemini  ·  Leaflet", font=font(28), fill=MUTED)
+            cd.text((160, 220), f"{violations} beach-visible lights located", font=self.f_big, fill=TEXT)
+            cd.text((160, 320), f"{residents} residents get a fix-it notice  ·  {city} streetlights reported to the city", font=font(34), fill=MUTED)
+            cd.text((160, 380), f"{counts['compliant']} window behind turtle glass (45% transmittance or less): compliant, no notice", font=font(34), fill=COMPLIANT_RGB)
+            cd.text((160, 450), "Lights are triangulated from the drone's GPS track and Gemini's boxes in several photos.", font=font(28), fill=MUTED)
+            cd.text((160, 610), "Turtle Light Check", font=font(48, True), fill=RAY_RGB)
+            cd.text((160, 680), "Gazebo  ·  Gemini  ·  Leaflet", font=font(28), fill=MUTED)
             out = Image.blend(out, card, end_alpha)
         return out
 
@@ -354,10 +376,11 @@ def fit(draw, text, fnt, width):
 
 
 def event_line(light):
-    p = light["props"]
-    who = "city" if p["notify"] == "city" else "resident"
+    p, k = light["props"], kind(light)
     where = p["building"] + (f" unit {p['unit']}" if p["unit"] else "")
-    return f"{where}  ·  {p['height_m']} m up  ·  notify {who}: {p['fix']}"
+    if k == "compliant":
+        return f"{where}  ·  {p['height_m']} m up  ·  behind turtle glass: compliant, no notice needed"
+    return f"{where}  ·  {p['height_m']} m up  ·  notify {k}: {p['fix']}"
 
 
 def main():
@@ -383,9 +406,20 @@ def main():
         import imageio_ffmpeg
 
         CHASE_DIR.mkdir(exist_ok=True)
+        keepalive = subprocess.Popen(
+            [
+                sys.executable, "-c",
+                "import time\n"
+                "from gz.transport13 import Node\n"
+                "from gz.msgs10.image_pb2 import Image\n"
+                "n = Node()\n"
+                "n.subscribe(Image, '/chase/camera', lambda m: None)\n"
+                "while True: time.sleep(1)\n",
+            ]
+        )
         gz.spawn(model_sdf("chase_cam", (x0 - 16, scene.DRONE_Y - 22, 17), (0, 0, 0), chase_cam_sdf()))
         # The first render after spawning a camera can stall the server for seconds; wait it out.
-        gz.chase_frame(timeout=60)
+        gz.chase_frame(timeout=180)
         overlay = Overlay(waypoints, lights)
         writer = imageio_ffmpeg.write_frames(
             str(HERE / "demo.mp4"), (OUT_W, OUT_H), fps=FPS, codec="libx264", quality=8, macro_block_size=8
@@ -406,12 +440,12 @@ def main():
             last_wp = wp
             for lt in lights:
                 if wp in lt["views"]:
-                    rgb = CITY_RGB if lt["props"]["notify"] == "city" else RAY_RGB
+                    rgb = RAY_COLOR[kind(lt)]
                     gz.spawn(ray_sdf(f"ray_{lt['n']}_{wp}", drone, lt["pos"], rgb))
                     rays[lt["n"]] += 1
                     # Two sight lines from different spots fix the light's position.
                     if rays[lt["n"]] == 2:
-                        rgb = CITY_RGB if lt["props"]["notify"] == "city" else RESIDENT_RGB
+                        rgb = MARKER_RGB[kind(lt)]
                         gz.spawn(marker_sdf(f"mark_{lt['n']}", lt["pos"], rgb))
                         found.append(lt)
                         events.append(event_line(lt))
@@ -431,6 +465,7 @@ def main():
             alpha = min(1.0, i / FPS)
             writer.send(overlay.draw(chase, path[-1][0], last_wp, found, events, alpha).tobytes())
         writer.close()
+        keepalive.kill()
         gz.remove("chase_cam")
         for f in CHASE_DIR.iterdir():
             f.unlink(missing_ok=True)

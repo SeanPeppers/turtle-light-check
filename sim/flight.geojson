@@ -22,15 +22,32 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              435,
-              919,
-              484,
-              972
+              432,
+              918,
+              487,
+              974
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains so light does not reach the nesting beach."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
+          },
+          {
+            "kind": "shadow",
+            "box_2d": [
+              727,
+              888,
+              792,
+              1000
+            ],
+            "light_type": "shadow on sand from adjacent dune vegetation/structure",
+            "compliant": false,
+            "severity": "medium",
+            "rule": "Shadow cast on beach habitat by artificial light",
+            "fix": "Relocate or shield exterior lighting so it casts no shadows on the nesting beach."
           }
         ]
       }
@@ -56,15 +73,18 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              435,
-              797,
-              484,
+              433,
+              796,
+              487,
               850
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
           }
         ]
       }
@@ -90,15 +110,18 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              439,
-              676,
-              484,
-              728
+              438,
+              674,
+              487,
+              729
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
           }
         ]
       }
@@ -124,26 +147,46 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              439,
-              555,
-              484,
-              606
+              436,
+              553,
+              487,
+              608
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
           },
           {
+            "kind": "light",
             "box_2d": [
-              546,
-              958,
-              593,
+              545,
+              957,
+              595,
               1000
             ],
-            "light_type": "streetlight lamp head",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please shield, lower the wattage, or turn off this streetlight to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              546,
+              892,
+              574,
+              919
+            ],
+            "light_type": "streetlamp head",
+            "compliant": false,
+            "severity": "high",
+            "rule": "Unshielded exterior light",
+            "fix": "Shield or turn off the outdoor streetlamp during nesting season."
           }
         ]
       }
@@ -169,37 +212,46 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              439,
-              434,
-              484,
-              485
+              438,
+              432,
+              487,
+              486
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
           },
           {
+            "kind": "light",
             "box_2d": [
-              546,
-              836,
+              541,
+              835,
               593,
               888
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
           },
           {
+            "kind": "light",
             "box_2d": [
-              546,
-              782,
-              584,
-              811
+              545,
+              756,
+              574,
+              783
             ],
-            "light_type": "streetlight lamp head",
+            "light_type": "streetlamp head",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please shield, lower the wattage, or turn off this streetlight to prevent disorienting sea turtle hatchlings."
+            "rule": "Unshielded exterior light",
+            "fix": "Shield or turn off the outdoor streetlamp during nesting season."
           }
         ]
       }
@@ -225,48 +277,60 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              439,
-              313,
-              484,
-              362
+              438,
+              310,
+              487,
+              363
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
           },
           {
+            "kind": "light",
             "box_2d": [
-              327,
-              759,
-              376,
-              811
-            ],
-            "light_type": "lit window",
-            "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
-          },
-          {
-            "box_2d": [
-              546,
-              715,
+              541,
+              713,
               593,
               767
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
           },
           {
+            "kind": "light",
             "box_2d": [
-              549,
-              635,
-              583,
-              663
+              326,
+              759,
+              377,
+              812
             ],
-            "light_type": "streetlight lamp head",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please shield, lower the wattage, or turn off this streetlight to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              545,
+              621,
+              574,
+              649
+            ],
+            "light_type": "streetlamp head",
+            "compliant": false,
+            "severity": "high",
+            "rule": "Unshielded exterior light",
+            "fix": "Shield or turn off the outdoor streetlamp during nesting season."
           }
         ]
       }
@@ -292,48 +356,60 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              439,
-              191,
-              484,
-              241
+              431,
+              188,
+              487,
+              242
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
           },
           {
+            "kind": "light",
             "box_2d": [
-              327,
-              637,
-              376,
-              690
+              326,
+              759,
+              377,
+              812
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
           },
           {
+            "kind": "light",
             "box_2d": [
-              546,
-              593,
+              541,
+              592,
               593,
               646
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
           },
           {
+            "kind": "light",
             "box_2d": [
-              549,
-              487,
-              583,
+              545,
+              486,
+              574,
               513
             ],
-            "light_type": "streetlight lamp head",
+            "light_type": "streetlamp head",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please shield, lower the wattage, or turn off this streetlight to prevent disorienting sea turtle hatchlings."
+            "rule": "Unshielded exterior light",
+            "fix": "Shield or turn off the outdoor streetlamp during nesting season."
           }
         ]
       }
@@ -359,48 +435,74 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              439,
-              70,
-              484,
+              426,
+              67,
+              487,
               120
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
           },
           {
+            "kind": "light",
             "box_2d": [
-              327,
-              516,
-              376,
+              326,
+              515,
+              377,
               569
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
           },
           {
+            "kind": "light",
             "box_2d": [
-              546,
-              472,
+              541,
+              349,
               593,
-              524
+              402
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
+            "rule": "Visible artificial light",
+            "fix": "Turn off interior lights or close blinds/shades after dark during nesting season."
           },
           {
+            "kind": "light",
             "box_2d": [
-              553,
-              338,
-              566,
-              365
+              541,
+              918,
+              594,
+              972
             ],
-            "light_type": "streetlight lamp head",
+            "light_type": "window behind turtle glass",
+            "compliant": true,
+            "severity": "ok",
+            "rule": "Compliant low-transmittance glass",
+            "fix": "No action needed."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              545,
+              214,
+              574,
+              243
+            ],
+            "light_type": "streetlamp head",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please shield, lower the wattage, or turn off this streetlight to prevent disorienting sea turtle hatchlings."
+            "rule": "Unshielded exterior light",
+            "fix": "Shield or turn off the outdoor streetlamp during nesting season."
           }
         ]
       }
@@ -424,41 +526,7 @@
           1280,
           720
         ],
-        "detections": [
-          {
-            "box_2d": [
-              327,
-              395,
-              376,
-              448
-            ],
-            "light_type": "lit window",
-            "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
-          },
-          {
-            "box_2d": [
-              546,
-              350,
-              593,
-              403
-            ],
-            "light_type": "lit window",
-            "severity": "high",
-            "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings."
-          },
-          {
-            "box_2d": [
-              553,
-              189,
-              566,
-              218
-            ],
-            "light_type": "streetlight lamp head",
-            "severity": "high",
-            "fix": "Please shield, lower the wattage, or turn off this streetlight to prevent disorienting sea turtle hatchlings."
-          }
-        ]
+        "detections": []
       }
     },
     {
@@ -482,37 +550,60 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              542,
-              224,
-              595,
-              280
+              547,
+              78,
+              732,
+              107
             ],
-            "light_type": "lit window",
+            "light_type": "street light",
+            "compliant": false,
             "severity": "high",
-            "fix": "Turn off this interior light or apply blackout curtains immediately to prevent disorienting sea turtle hatchlings."
+            "rule": "direct light visible",
+            "fix": "Shield or turn off the street light to prevent disorientation of sea turtle hatchlings."
           },
           {
+            "kind": "light",
             "box_2d": [
-              323,
-              392,
-              381,
-              447
+              326,
+              394,
+              377,
+              446
             ],
-            "light_type": "lit window",
-            "severity": "medium",
-            "fix": "Install blinds or turn off the lights in this room to eliminate direct illumination toward the nesting beach."
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
           },
           {
+            "kind": "light",
             "box_2d": [
-              550,
-              38,
-              569,
-              72
+              543,
+              226,
+              594,
+              278
             ],
-            "light_type": "streetlight",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Shield this streetlight or use wildlife-friendly amber LEDs pointed downward so light does not reach the beach."
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              548,
+              798,
+              593,
+              850
+            ],
+            "light_type": "window behind turtle glass",
+            "compliant": true,
+            "severity": "ok",
+            "rule": "compliant VLT <= 45%",
+            "fix": "No action needed as the turtle glass complies with local regulations."
           }
         ]
       }
@@ -538,26 +629,46 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              540,
-              102,
-              597,
-              159
+              543,
+              104,
+              594,
+              156
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Close blinds or turn off interior lighting to stop luring hatchlings away from the ocean."
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
           },
           {
+            "kind": "light",
             "box_2d": [
-              323,
-              271,
-              381,
-              327
+              326,
+              272,
+              377,
+              324
             ],
-            "light_type": "lit window",
-            "severity": "medium",
-            "fix": "Use window treatments or turn off unnecessary lights visible from the nesting shore."
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              548,
+              676,
+              593,
+              728
+            ],
+            "light_type": "window behind turtle glass",
+            "compliant": true,
+            "severity": "ok",
+            "rule": "compliant VLT <= 45%",
+            "fix": "No action needed as the turtle glass complies with local regulations."
           }
         ]
       }
@@ -583,37 +694,60 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              325,
-              149,
-              381,
-              204
-            ],
-            "light_type": "lit window",
-            "severity": "medium",
-            "fix": "Add dark blinds or switch off the light in this room to protect nesting sea turtles."
-          },
-          {
-            "box_2d": [
-              542,
+              543,
               0,
-              597,
-              36
+              594,
+              34
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Turn off this light or cover the window completely to prevent disorienting hatchlings."
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
           },
           {
+            "kind": "light",
             "box_2d": [
-              550,
-              928,
-              569,
-              963
+              326,
+              150,
+              377,
+              202
             ],
-            "light_type": "streetlight",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Retrofit this streetlight with a full cutoff fixture and amber bulb to keep light off the beach."
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              548,
+              554,
+              593,
+              606
+            ],
+            "light_type": "window behind turtle glass",
+            "compliant": true,
+            "severity": "ok",
+            "rule": "compliant VLT <= 45%",
+            "fix": "No action needed as the turtle glass complies with local regulations."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              547,
+              893,
+              756,
+              921
+            ],
+            "light_type": "street light",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Shield or turn off the street light to prevent disorientation of sea turtle hatchlings."
           }
         ]
       }
@@ -639,26 +773,60 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              325,
-              27,
-              381,
-              82
+              326,
+              28,
+              377,
+              80
             ],
-            "light_type": "lit window",
-            "severity": "medium",
-            "fix": "Install blackout blinds or extinguish this light during nesting season."
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
           },
           {
+            "kind": "light",
             "box_2d": [
               548,
-              781,
-              569,
-              813
+              432,
+              593,
+              484
             ],
-            "light_type": "streetlight",
+            "light_type": "window behind turtle glass",
+            "compliant": true,
+            "severity": "ok",
+            "rule": "compliant VLT <= 45%",
+            "fix": "No action needed as the turtle glass complies with local regulations."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              547,
+              758,
+              772,
+              786
+            ],
+            "light_type": "street light",
+            "compliant": false,
             "severity": "high",
-            "fix": "Use wildlife-approved shielding and low-intensity amber lighting on this pole."
+            "rule": "direct light visible",
+            "fix": "Shield or turn off the street light to prevent disorientation of sea turtle hatchlings."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              347,
+              955,
+              377,
+              1000
+            ],
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
           }
         ]
       }
@@ -684,37 +852,74 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              435,
-              878,
-              488,
-              934
+              347,
+              856,
+              377,
+              885
             ],
-            "light_type": "lit window",
-            "severity": "medium",
-            "fix": "Close window coverings or turn off this room's lights to prevent coastal light pollution."
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
           },
           {
+            "kind": "light",
             "box_2d": [
-              647,
-              963,
-              704,
+              426,
+              879,
+              485,
+              930
+            ],
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              650,
+              955,
+              701,
               1000
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Shield or turn off this low-level window light to prevent misorienting emerging hatchlings."
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
           },
           {
+            "kind": "light",
             "box_2d": [
-              552,
-              634,
-              569,
-              663
+              548,
+              310,
+              593,
+              362
             ],
-            "light_type": "streetlight",
+            "light_type": "window behind turtle glass",
+            "compliant": true,
+            "severity": "ok",
+            "rule": "compliant VLT <= 45%",
+            "fix": "No action needed as the turtle glass complies with local regulations."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              547,
+              624,
+              772,
+              652
+            ],
+            "light_type": "street light",
+            "compliant": false,
             "severity": "high",
-            "fix": "Equip this streetlight with directional shields to keep light away from the beach dunes."
+            "rule": "direct light visible",
+            "fix": "Shield or turn off the street light to prevent disorientation of sea turtle hatchlings."
           }
         ]
       }
@@ -740,37 +945,88 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              435,
-              759,
-              488,
-              815
+              347,
+              732,
+              377,
+              760
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              426,
+              755,
+              485,
+              806
+            ],
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              650,
+              844,
+              701,
+              895
+            ],
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              548,
+              187,
+              593,
+              239
+            ],
+            "light_type": "window behind turtle glass",
+            "compliant": true,
+            "severity": "ok",
+            "rule": "compliant VLT <= 45%",
+            "fix": "No action needed as the turtle glass complies with local regulations."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              547,
+              489,
+              772,
+              517
+            ],
+            "light_type": "street light",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Shield or turn off the street light to prevent disorientation of sea turtle hatchlings."
+          },
+          {
+            "kind": "shadow",
+            "box_2d": [
+              865,
+              706,
+              921,
+              789
+            ],
+            "light_type": "shadow of beach umbrella on the sand",
+            "compliant": false,
             "severity": "medium",
-            "fix": "Apply window film or close blinds to reduce beach-visible artificial light."
-          },
-          {
-            "box_2d": [
-              647,
-              843,
-              704,
-              896
-            ],
-            "light_type": "lit window",
-            "severity": "high",
-            "fix": "Turn off this light or install blackout shades to protect sea turtle hatchlings."
-          },
-          {
-            "box_2d": [
-              550,
-              487,
-              567,
-              510
-            ],
-            "light_type": "streetlight",
-            "severity": "high",
-            "fix": "Use a fully shielded, wildlife-safe fixture for this streetlamp."
+            "rule": "shadow in nesting habitat",
+            "fix": "Remove or reposition beach furniture generating shadows during nesting season."
           }
         ]
       }
@@ -796,48 +1052,102 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              433,
-              637,
-              488,
-              692
+              347,
+              606,
+              377,
+              635
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              426,
+              630,
+              681,
+              680
+            ],
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              650,
+              719,
+              701,
+              773
+            ],
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              548,
+              65,
+              593,
+              117
+            ],
+            "light_type": "window behind turtle glass",
+            "compliant": true,
+            "severity": "ok",
+            "rule": "compliant VLT <= 45%",
+            "fix": "No action needed as the turtle glass complies with local regulations."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              547,
+              353,
+              756,
+              376
+            ],
+            "light_type": "street light",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Shield or turn off the street light to prevent disorientation of sea turtle hatchlings."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              547,
+              893,
+              732,
+              921
+            ],
+            "light_type": "street light",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Shield or turn off the street light to prevent disorientation of sea turtle hatchlings."
+          },
+          {
+            "kind": "shadow",
+            "box_2d": [
+              865,
+              706,
+              921,
+              789
+            ],
+            "light_type": "shadow of beach umbrella on the sand",
+            "compliant": false,
             "severity": "medium",
-            "fix": "Close window blinds to block light visible from the nesting beach."
-          },
-          {
-            "box_2d": [
-              647,
-              720,
-              704,
-              775
-            ],
-            "light_type": "lit window",
-            "severity": "high",
-            "fix": "Extinguish this interior light or use blackout curtains immediately."
-          },
-          {
-            "box_2d": [
-              550,
-              337,
-              569,
-              365
-            ],
-            "light_type": "streetlight",
-            "severity": "high",
-            "fix": "Shield this streetlight properly to prevent disorienting marine life."
-          },
-          {
-            "box_2d": [
-              552,
-              928,
-              569,
-              963
-            ],
-            "light_type": "streetlight",
-            "severity": "high",
-            "fix": "Direct this light downward and use amber LEDs to protect sea turtles."
+            "rule": "shadow in nesting habitat",
+            "fix": "Remove or reposition beach furniture generating shadows during nesting season."
           }
         ]
       }
@@ -863,59 +1173,102 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              325,
-              918,
-              381,
-              975
+              347,
+              481,
+              377,
+              510
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              426,
+              505,
+              485,
+              555
+            ],
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              650,
+              594,
+              701,
+              651
+            ],
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              326,
+              919,
+              377,
+              972
+            ],
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              547,
+              215,
+              746,
+              241
+            ],
+            "light_type": "street light",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Shield or turn off the street light to prevent disorientation of sea turtle hatchlings."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              547,
+              758,
+              732,
+              784
+            ],
+            "light_type": "street light",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Shield or turn off the street light to prevent disorientation of sea turtle hatchlings."
+          },
+          {
+            "kind": "shadow",
+            "box_2d": [
+              865,
+              520,
+              921,
+              596
+            ],
+            "light_type": "shadow of beach umbrella on the sand",
+            "compliant": false,
             "severity": "medium",
-            "fix": "Install blackout blinds or turn off this light to stop luring hatchlings inland."
-          },
-          {
-            "box_2d": [
-              431,
-              515,
-              488,
-              568
-            ],
-            "light_type": "lit window",
-            "severity": "medium",
-            "fix": "Use window treatments to keep interior light from spilling toward the shore."
-          },
-          {
-            "box_2d": [
-              647,
-              599,
-              704,
-              653
-            ],
-            "light_type": "lit window",
-            "severity": "high",
-            "fix": "Turn off this light or cover the window to prevent coastal light pollution."
-          },
-          {
-            "box_2d": [
-              550,
-              187,
-              567,
-              218
-            ],
-            "light_type": "streetlight",
-            "severity": "high",
-            "fix": "Shield or replace this fixture with turtle-friendly amber lighting."
-          },
-          {
-            "box_2d": [
-              550,
-              781,
-              569,
-              813
-            ],
-            "light_type": "streetlight",
-            "severity": "high",
-            "fix": "Retrofit with a full cutoff shield to prevent light spill toward the nesting beach."
+            "rule": "shadow in nesting habitat",
+            "fix": "Remove or reposition beach furniture generating shadows during nesting season."
           }
         ]
       }
@@ -941,59 +1294,102 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              325,
-              795,
-              381,
-              852
+              347,
+              356,
+              377,
+              388
             ],
-            "light_type": "lit window",
-            "severity": "medium",
-            "fix": "Close blinds or turn off this light to protect nesting sea turtles."
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
           },
           {
+            "kind": "light",
             "box_2d": [
-              431,
+              426,
               394,
-              488,
-              448
+              485,
+              445
             ],
-            "light_type": "lit window",
-            "severity": "medium",
-            "fix": "Use curtains to prevent interior illumination from reaching the beach dunes."
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
           },
           {
+            "kind": "light",
             "box_2d": [
-              647,
+              650,
               477,
-              704,
-              530
+              701,
+              529
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Turn off this light or use blackout shades immediately."
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
           },
           {
+            "kind": "light",
             "box_2d": [
-              552,
-              38,
-              569,
-              72
+              326,
+              798,
+              377,
+              850
             ],
-            "light_type": "streetlight",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Shield this fixture downward to prevent disorienting sea turtle hatchlings."
+            "rule": "direct light visible",
+            "fix": "Turn off interior lights or install window treatments that block visibility from the beach."
           },
           {
+            "kind": "light",
             "box_2d": [
-              550,
-              634,
-              569,
-              663
+              547,
+              78,
+              739,
+              107
             ],
-            "light_type": "streetlight",
+            "light_type": "street light",
+            "compliant": false,
             "severity": "high",
-            "fix": "Equip this streetlight with a directional shield and amber bulb."
+            "rule": "direct light visible",
+            "fix": "Shield or turn off the street light to prevent disorientation of sea turtle hatchlings."
+          },
+          {
+            "kind": "light",
+            "box_2d": [
+              547,
+              624,
+              732,
+              647
+            ],
+            "light_type": "street light",
+            "compliant": false,
+            "severity": "high",
+            "rule": "direct light visible",
+            "fix": "Shield or turn off the street light to prevent disorientation of sea turtle hatchlings."
+          },
+          {
+            "kind": "shadow",
+            "box_2d": [
+              865,
+              329,
+              921,
+              407
+            ],
+            "light_type": "shadow of beach umbrella on the sand",
+            "compliant": false,
+            "severity": "medium",
+            "rule": "shadow in nesting habitat",
+            "fix": "Remove or reposition beach furniture generating shadows during nesting season."
           }
         ]
       }
@@ -1019,48 +1415,88 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              431,
-              270,
-              485,
-              325
+              343,
+              236,
+              378,
+              269
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "medium",
-            "fix": "Please turn off this interior light or draw dark blinds to prevent disorientation of sea turtle hatchlings."
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
           },
           {
+            "kind": "light",
+            "box_2d": [
+              431,
+              269,
+              487,
+              325
+            ],
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
+          },
+          {
+            "kind": "light",
             "box_2d": [
               647,
               353,
-              703,
-              408
+              705,
+              410
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off this ground-level light or install heavy window treatments so it is not visible from the nesting beach."
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
           },
           {
+            "kind": "light",
             "box_2d": [
-              326,
+              323,
               674,
-              377,
+              381,
               729
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please close blinds or turn off the lights in this room to avoid pulling hatchlings away from the ocean."
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
           },
           {
+            "kind": "light",
             "box_2d": [
-              551,
-              486,
-              566,
+              546,
+              487,
+              563,
               513
             ],
-            "light_type": "streetlight",
+            "light_type": "street light head",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please shield this fixture or switch to long-wavelength amber/red LEDs that are wildlife-friendly."
+            "rule": "visible artificial light from beach",
+            "fix": "Shield or turn off exterior streetlights during nesting season."
+          },
+          {
+            "kind": "shadow",
+            "box_2d": [
+              862,
+              134,
+              922,
+              224
+            ],
+            "light_type": "shadow cast by table/umbrella on the sand",
+            "compliant": false,
+            "severity": "medium",
+            "rule": "shadow in nesting habitat",
+            "fix": "Adjust or turn off the offending light source so it no longer casts shadows on the sand."
           }
         ]
       }
@@ -1086,48 +1522,88 @@
         ],
         "detections": [
           {
+            "kind": "light",
+            "box_2d": [
+              343,
+              112,
+              378,
+              145
+            ],
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "medium",
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
+          },
+          {
+            "kind": "light",
             "box_2d": [
               431,
               148,
-              485,
-              203
+              487,
+              204
             ],
-            "light_type": "lit window",
-            "severity": "medium",
-            "fix": "Please turn off this light or use room-darkening shades during nesting season."
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
           },
           {
+            "kind": "light",
             "box_2d": [
               647,
-              231,
-              703,
-              285
+              232,
+              705,
+              287
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please use blackout curtains or switch off this interior light visible from the shore."
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
           },
           {
+            "kind": "light",
             "box_2d": [
-              326,
+              323,
               553,
-              377,
+              381,
               608
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off this light or cover the window to protect emerging sea turtles."
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
           },
           {
+            "kind": "light",
             "box_2d": [
-              551,
-              336,
-              566,
-              366
+              546,
+              351,
+              563,
+              377
             ],
-            "light_type": "streetlight",
+            "light_type": "street light head",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please shield or replace this pole light with wildlife-compliant lighting."
+            "rule": "visible artificial light from beach",
+            "fix": "Shield or turn off exterior streetlights during nesting season."
+          },
+          {
+            "kind": "shadow",
+            "box_2d": [
+              862,
+              0,
+              922,
+              40
+            ],
+            "light_type": "shadow cast by table/umbrella on the sand",
+            "compliant": false,
+            "severity": "medium",
+            "rule": "shadow in nesting habitat",
+            "fix": "Adjust or turn off the offending light source so it no longer casts shadows on the sand."
           }
         ]
       }
@@ -1153,48 +1629,74 @@
         ],
         "detections": [
           {
+            "kind": "light",
+            "box_2d": [
+              343,
+              0,
+              378,
+              22
+            ],
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "medium",
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
+          },
+          {
+            "kind": "light",
             "box_2d": [
               431,
               26,
-              485,
-              82
+              487,
+              83
             ],
-            "light_type": "lit window",
-            "severity": "medium",
-            "fix": "Please turn off this room's light or install blinds to keep light off the beach."
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
           },
           {
+            "kind": "light",
             "box_2d": [
               647,
-              109,
-              703,
+              110,
+              705,
               166
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please draw blinds or turn off this light to prevent luring hatchlings inland."
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
           },
           {
+            "kind": "light",
             "box_2d": [
-              326,
+              323,
               431,
-              377,
-              486
+              381,
+              487
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off this interior light or shield the window from beach view."
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
           },
           {
+            "kind": "light",
             "box_2d": [
-              551,
-              187,
-              566,
-              218
+              546,
+              214,
+              563,
+              243
             ],
-            "light_type": "streetlight",
+            "light_type": "street light head",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please shield this streetlight or use turtle-safe amber bulbs."
+            "rule": "visible artificial light from beach",
+            "fix": "Shield or turn off exterior streetlights during nesting season."
           }
         ]
       }
@@ -1220,37 +1722,46 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
               647,
               0,
-              703,
-              43
+              705,
+              24
             ],
-            "light_type": "lit window",
-            "severity": "medium",
-            "fix": "Please turn off this light or close blinds during nesting season."
+            "light_type": "lit window, no blinds",
+            "compliant": false,
+            "severity": "high",
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
           },
           {
+            "kind": "light",
             "box_2d": [
-              326,
+              323,
               308,
-              377,
+              381,
               363
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off this upper-floor light or use room-darkening shades."
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
           },
           {
+            "kind": "light",
             "box_2d": [
-              551,
-              37,
-              566,
-              71
+              546,
+              78,
+              563,
+              107
             ],
-            "light_type": "streetlight",
+            "light_type": "street light head",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please shield or replace this fixture with a turtle-safe alternative."
+            "rule": "visible artificial light from beach",
+            "fix": "Shield or turn off exterior streetlights during nesting season."
           }
         ]
       }
@@ -1276,15 +1787,18 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              326,
-              186,
-              377,
-              241
+              323,
+              187,
+              381,
+              242
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off this light or install blackout blinds to protect sea turtles."
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
           }
         ]
       }
@@ -1310,15 +1824,18 @@
         ],
         "detections": [
           {
+            "kind": "light",
             "box_2d": [
-              326,
-              64,
-              377,
-              118
+              323,
+              65,
+              381,
+              120
             ],
-            "light_type": "lit window",
+            "light_type": "lit window, no blinds",
+            "compliant": false,
             "severity": "high",
-            "fix": "Please turn off this light or use window coverings visible from the beach."
+            "rule": "visible artificial light from beach",
+            "fix": "Turn off interior lights or close opaque window coverings."
           }
         ]
       }
