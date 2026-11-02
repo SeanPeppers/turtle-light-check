@@ -1,74 +1,104 @@
-import { useEffect, useRef, useState } from 'react'
-import L from 'leaflet'
+import { useEffect, useState } from 'react'
+import { MapContainer, TileLayer, Circle, CircleMarker, Polyline, Popup, useMap, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { Trash2 } from 'lucide-react'
+import { SEVERITY_COLOR, type MapLight } from './lights'
 
-const KINDS = ['Streetlight', 'Porch or building light', 'Parking lot light', 'Other'] as const
-type Pin = { id: number; kind: string; lat: number; lng: number }
+const SAT = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+const CENTER: [number, number] = [26.4514, -81.9521] // Fort Myers Beach, by the pier (where the sim flies)
 
-// ponytail: pins live in memory only; add a backend/localStorage when they need to persist.
-export default function LightMap() {
-  const el = useRef<HTMLDivElement>(null)
-  const map = useRef<L.Map | null>(null)
-  const markers = useRef(new Map<number, L.CircleMarker>())
-  const kind = useRef<string>(KINDS[0])
-  const nextId = useRef(1)
-  const [pins, setPins] = useState<Pin[]>([])
+function ClickToPlace({ onPlace }: { onPlace?: (at: { lat: number; lng: number }) => void }) {
+  useMapEvents({ click: (e) => onPlace?.({ lat: e.latlng.lat, lng: e.latlng.lng }) })
+  return null
+}
 
+function FlyTo({ target }: { target?: MapLight }) {
+  const map = useMap()
   useEffect(() => {
-    const m = L.map(el.current!).setView([26.45, -82.03], 11) // Sanibel → Fort Myers Beach
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(m)
-    m.on('click', (e: L.LeafletMouseEvent) => {
-      const pin = { id: nextId.current++, kind: kind.current, lat: e.latlng.lat, lng: e.latlng.lng }
-      markers.current.set(
-        pin.id,
-        L.circleMarker(e.latlng, { radius: 9, color: '#ff5a5a', fillColor: '#ffd166', fillOpacity: 0.9 })
-          .bindTooltip(pin.kind)
-          .addTo(m),
-      )
-      setPins((p) => [...p, pin])
-    })
-    map.current = m
-    const markerMap = markers.current
-    return () => {
-      m.remove()
-      markerMap.clear()
-    }
-  }, [])
+    if (target) map.flyTo([target.lat, target.lng], Math.max(map.getZoom(), 18))
+  }, [target, map])
+  return null
+}
 
-  function remove(id: number) {
-    markers.current.get(id)?.remove()
-    markers.current.delete(id)
-    setPins((p) => p.filter((x) => x.id !== id))
-  }
+type Props = {
+  lights: MapLight[]
+  dronePath?: [number, number][]
+  placing?: boolean
+  onPlace?: (at: { lat: number; lng: number }) => void
+  focus?: MapLight
+}
+
+export default function LightMap({ lights, dronePath = [], placing, onPlace, focus }: Props) {
+  const [selected, setSelected] = useState<string>()
+  const issues = lights.filter((l) => l.severity !== 'ok').length
+  const sel = lights.find((l) => l.id === selected)
 
   return (
-    <section id="map" className="card">
-      <h2>Map the lights</h2>
-      <p>Pick a light type, then click the map where a light shines toward the beach.</p>
-      <label>
-        Light type{' '}
-        <select onChange={(e) => (kind.current = e.target.value)}>
-          {KINDS.map((k) => (
-            <option key={k}>{k}</option>
-          ))}
-        </select>
-      </label>
-      <div ref={el} className="map" role="application" aria-label="Interactive map: click to mark a light" />
-      <ul aria-live="polite">
-        {pins.map((p) => (
-          <li key={p.id}>
-            <strong>{p.kind}</strong> — {p.lat.toFixed(5)}, {p.lng.toFixed(5)}{' '}
-            <button type="button" onClick={() => remove(p.id)} aria-label={`Remove ${p.kind} at ${p.lat.toFixed(5)}, ${p.lng.toFixed(5)}`}>
-              <Trash2 aria-hidden size={16} />
-            </button>
-          </li>
+    <section id="map" className="lightmap" aria-label="Map of detected lights">
+      <div className="lightmap-bar">
+        <span>
+          <i style={{ background: SEVERITY_COLOR.high }} /> {issues} possible issue{issues !== 1 && 's'}
+        </span>
+        <span>
+          <i style={{ background: SEVERITY_COLOR.ok }} /> {lights.length - issues} OK
+        </span>
+        {dronePath.length > 1 && (
+          <span>
+            <i style={{ background: 'cyan' }} /> drone path
+          </span>
+        )}
+        {placing && <strong className="lightmap-place">No GPS in that photo. Click the map where you took it.</strong>}
+      </div>
+      <MapContainer center={CENTER} zoom={18} maxZoom={20} className={`lightmap-map${placing ? ' placing' : ''}`}>
+        <TileLayer url={SAT} attribution="Tiles © Esri" maxZoom={20} maxNativeZoom={19} />
+        <ClickToPlace onPlace={placing ? onPlace : undefined} />
+        <FlyTo target={focus} />
+
+        {dronePath.length > 1 && <Polyline positions={dronePath} pathOptions={{ color: 'cyan', dashArray: '6', weight: 3 }} />}
+        {dronePath.map((p, i) => (
+          <CircleMarker key={`wp${i}`} center={p} radius={2} pathOptions={{ color: 'cyan', fillOpacity: 1, weight: 1 }} />
         ))}
-      </ul>
-      <small>Hatchlings crawl toward the brightest horizon; lights visible from the beach can lead them inland.</small>
+
+        {/* sight lines: every drone position that saw the selected light (triangulation) */}
+        {sel?.views?.map((v, i) => (
+          <Polyline key={`ray${i}`} positions={[v, [sel.lat, sel.lng]]} pathOptions={{ color: '#ffe680', weight: 1, opacity: 0.8 }} />
+        ))}
+
+        {lights.map((l) => {
+          const color = SEVERITY_COLOR[l.severity]
+          return (
+            <span key={l.id}>
+              <Circle center={[l.lat, l.lng]} radius={3} pathOptions={{ stroke: false, fillColor: color, fillOpacity: 0.3 }} />
+              <CircleMarker
+                center={[l.lat, l.lng]}
+                radius={7}
+                pathOptions={{ color: '#fff', weight: 2, fillColor: color, fillOpacity: 0.95 }}
+                eventHandlers={{ click: () => setSelected(l.id), popupclose: () => setSelected(undefined) }}
+              >
+                <Popup>
+                  {l.image && <img src={l.image} alt="" width={220} style={{ display: 'block', borderRadius: 6 }} />}
+                  <div style={{ marginTop: 6 }}>
+                    <b>{l.severity === 'ok' ? '✅ OK' : `⚠️ Possible issue (${l.severity})`}</b> · {l.label}
+                  </div>
+                  {l.building && <div>{l.building}</div>}
+                  <div>{l.advice}</div>
+                  {l.heightM != null && (
+                    <div>
+                      {l.heightM.toFixed(1)} m high
+                      {l.distanceM != null && ` · ${Math.round(l.distanceM)} m inland from the drone`}
+                    </div>
+                  )}
+                  <small>
+                    {l.source === 'drone'
+                      ? `Drone · ${l.views?.length ? `triangulated from ${l.views.length} views` : `waypoint ${l.waypoint ?? '?'}`}`
+                      : 'Phone photo'}
+                    {l.notify && ` · notify ${l.notify}`}
+                  </small>
+                </Popup>
+              </CircleMarker>
+            </span>
+          )
+        })}
+      </MapContainer>
     </section>
   )
 }

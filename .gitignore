@@ -26,7 +26,17 @@ dist-ssr
 .env*
 .vercel
 
-.env*
 !.env.example
 .vercel
 textures-src
+.env
+__pycache__/
+.venv/
+venv/
+node_modules/
+dist/
+frames/
+
+
+# team uses pnpm-lock.yaml; ignore npm lockfile if someone runs npm install
+package-lock.json

@@ -1,0 +1,1525 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9521088,
+          26.4514616
+        ]
+      },
+      "properties": {
+        "id": "condo-2-unit-201",
+        "building": "Condo 2",
+        "unit": "201",
+        "light_type": "lit window",
+        "severity": "high",
+        "visible_from_beach": true,
+        "fix": "Please shield, lower the wattage, or turn off this streetlight to prevent disorienting sea turtle hatchlings.",
+        "notify": "resident",
+        "height_m": 6.4,
+        "distance_from_drone_m": 39.2,
+        "method": "triangulated",
+        "image": "captures/wp08.png",
+        "box_2d": [
+          546,
+          472,
+          593,
+          524
+        ],
+        "views": [
+          {
+            "waypoint": 4,
+            "image": "captures/wp04.png",
+            "drone": [
+              -81.9525963,
+              26.4513368,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 73.9,
+            "box_2d": [
+              546,
+              958,
+              593,
+              1000
+            ]
+          },
+          {
+            "waypoint": 5,
+            "image": "captures/wp05.png",
+            "drone": [
+              -81.9525305,
+              26.4512956,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 66.4,
+            "box_2d": [
+              546,
+              836,
+              593,
+              888
+            ]
+          },
+          {
+            "waypoint": 6,
+            "image": "captures/wp06.png",
+            "drone": [
+              -81.9524648,
+              26.4512544,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 57.1,
+            "box_2d": [
+              546,
+              715,
+              593,
+              767
+            ]
+          },
+          {
+            "waypoint": 7,
+            "image": "captures/wp07.png",
+            "drone": [
+              -81.952399,
+              26.4512132,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 46.4,
+            "box_2d": [
+              546,
+              593,
+              593,
+              646
+            ]
+          },
+          {
+            "waypoint": 8,
+            "image": "captures/wp08.png",
+            "drone": [
+              -81.9523333,
+              26.4511719,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 34.8,
+            "box_2d": [
+              546,
+              472,
+              593,
+              524
+            ]
+          },
+          {
+            "waypoint": 9,
+            "image": "captures/wp09.png",
+            "drone": [
+              -81.9522675,
+              26.4511307,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 23.2,
+            "box_2d": [
+              546,
+              350,
+              593,
+              403
+            ]
+          },
+          {
+            "waypoint": 10,
+            "image": "captures/wp10.png",
+            "drone": [
+              -81.9522018,
+              26.4510895,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 12.3,
+            "box_2d": [
+              542,
+              224,
+              595,
+              280
+            ]
+          },
+          {
+            "waypoint": 11,
+            "image": "captures/wp11.png",
+            "drone": [
+              -81.952136,
+              26.4510483,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 3.1,
+            "box_2d": [
+              540,
+              102,
+              597,
+              159
+            ]
+          },
+          {
+            "waypoint": 12,
+            "image": "captures/wp12.png",
+            "drone": [
+              -81.9520703,
+              26.4510071,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 355.9,
+            "box_2d": [
+              542,
+              0,
+              597,
+              36
+            ]
+          }
+        ],
+        "captured_at": "2026-11-02T15:33:40+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9514484,
+          26.4510475
+        ]
+      },
+      "properties": {
+        "id": "condo-4-unit-104",
+        "building": "Condo 4",
+        "unit": "104",
+        "light_type": "lit window",
+        "severity": "high",
+        "visible_from_beach": true,
+        "fix": "Shield or turn off this low-level window light to prevent misorienting emerging hatchlings.",
+        "notify": "resident",
+        "height_m": 2.5,
+        "distance_from_drone_m": 39.2,
+        "method": "triangulated",
+        "image": "captures/wp18.png",
+        "box_2d": [
+          647,
+          477,
+          704,
+          530
+        ],
+        "views": [
+          {
+            "waypoint": 14,
+            "image": "captures/wp14.png",
+            "drone": [
+              -81.9519388,
+              26.4509246,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 74.0,
+            "box_2d": [
+              647,
+              963,
+              704,
+              1000
+            ]
+          },
+          {
+            "waypoint": 15,
+            "image": "captures/wp15.png",
+            "drone": [
+              -81.951873,
+              26.4508834,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 66.9,
+            "box_2d": [
+              647,
+              843,
+              704,
+              896
+            ]
+          },
+          {
+            "waypoint": 16,
+            "image": "captures/wp16.png",
+            "drone": [
+              -81.9518073,
+              26.4508422,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 57.6,
+            "box_2d": [
+              647,
+              720,
+              704,
+              775
+            ]
+          },
+          {
+            "waypoint": 17,
+            "image": "captures/wp17.png",
+            "drone": [
+              -81.9517415,
+              26.450801,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 47.0,
+            "box_2d": [
+              647,
+              599,
+              704,
+              653
+            ]
+          },
+          {
+            "waypoint": 18,
+            "image": "captures/wp18.png",
+            "drone": [
+              -81.9516758,
+              26.4507597,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 35.3,
+            "box_2d": [
+              647,
+              477,
+              704,
+              530
+            ]
+          },
+          {
+            "waypoint": 19,
+            "image": "captures/wp19.png",
+            "drone": [
+              -81.95161,
+              26.4507185,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 23.6,
+            "box_2d": [
+              647,
+              353,
+              703,
+              408
+            ]
+          },
+          {
+            "waypoint": 20,
+            "image": "captures/wp20.png",
+            "drone": [
+              -81.9515443,
+              26.4506773,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 12.8,
+            "box_2d": [
+              647,
+              231,
+              703,
+              285
+            ]
+          },
+          {
+            "waypoint": 21,
+            "image": "captures/wp21.png",
+            "drone": [
+              -81.9514785,
+              26.4506361,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 3.6,
+            "box_2d": [
+              647,
+              109,
+              703,
+              166
+            ]
+          },
+          {
+            "waypoint": 22,
+            "image": "captures/wp22.png",
+            "drone": [
+              -81.9514128,
+              26.4505949,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 356.1,
+            "box_2d": [
+              647,
+              0,
+              703,
+              43
+            ]
+          }
+        ],
+        "captured_at": "2026-11-02T15:33:40+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9523277,
+          26.4515971
+        ]
+      },
+      "properties": {
+        "id": "condo-1-unit-302",
+        "building": "Condo 1",
+        "unit": "302",
+        "light_type": "lit window",
+        "severity": "high",
+        "visible_from_beach": true,
+        "fix": "Please turn off interior lights or close blackout curtains so light does not reach the nesting beach.",
+        "notify": "resident",
+        "height_m": 10.4,
+        "distance_from_drone_m": 39.1,
+        "method": "triangulated",
+        "image": "captures/wp05.png",
+        "box_2d": [
+          439,
+          434,
+          484,
+          485
+        ],
+        "views": [
+          {
+            "waypoint": 1,
+            "image": "captures/wp01.png",
+            "drone": [
+              -81.9527935,
+              26.4514605,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 71.9,
+            "box_2d": [
+              435,
+              919,
+              484,
+              972
+            ]
+          },
+          {
+            "waypoint": 2,
+            "image": "captures/wp02.png",
+            "drone": [
+              -81.9527278,
+              26.4514193,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 63.6,
+            "box_2d": [
+              435,
+              797,
+              484,
+              850
+            ]
+          },
+          {
+            "waypoint": 3,
+            "image": "captures/wp03.png",
+            "drone": [
+              -81.952662,
+              26.451378,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 53.8,
+            "box_2d": [
+              439,
+              676,
+              484,
+              728
+            ]
+          },
+          {
+            "waypoint": 4,
+            "image": "captures/wp04.png",
+            "drone": [
+              -81.9525963,
+              26.4513368,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 42.7,
+            "box_2d": [
+              439,
+              555,
+              484,
+              606
+            ]
+          },
+          {
+            "waypoint": 5,
+            "image": "captures/wp05.png",
+            "drone": [
+              -81.9525305,
+              26.4512956,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 31.1,
+            "box_2d": [
+              439,
+              434,
+              484,
+              485
+            ]
+          },
+          {
+            "waypoint": 6,
+            "image": "captures/wp06.png",
+            "drone": [
+              -81.9524648,
+              26.4512544,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 19.7,
+            "box_2d": [
+              439,
+              313,
+              484,
+              362
+            ]
+          },
+          {
+            "waypoint": 7,
+            "image": "captures/wp07.png",
+            "drone": [
+              -81.952399,
+              26.4512132,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 9.4,
+            "box_2d": [
+              439,
+              191,
+              484,
+              241
+            ]
+          },
+          {
+            "waypoint": 8,
+            "image": "captures/wp08.png",
+            "drone": [
+              -81.9523333,
+              26.4511719,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 0.7,
+            "box_2d": [
+              439,
+              70,
+              484,
+              120
+            ]
+          }
+        ],
+        "captured_at": "2026-11-02T15:33:40+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9512775,
+          26.4509365
+        ]
+      },
+      "properties": {
+        "id": "condo-5-unit-402",
+        "building": "Condo 5",
+        "unit": "402",
+        "light_type": "lit window",
+        "severity": "high",
+        "visible_from_beach": true,
+        "fix": "Please close blinds or turn off the lights in this room to avoid pulling hatchlings away from the ocean.",
+        "notify": "resident",
+        "height_m": 14.5,
+        "distance_from_drone_m": 38.9,
+        "method": "triangulated",
+        "image": "captures/wp21.png",
+        "box_2d": [
+          326,
+          431,
+          377,
+          486
+        ],
+        "views": [
+          {
+            "waypoint": 17,
+            "image": "captures/wp17.png",
+            "drone": [
+              -81.9517415,
+              26.450801,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 71.9,
+            "box_2d": [
+              325,
+              918,
+              381,
+              975
+            ]
+          },
+          {
+            "waypoint": 18,
+            "image": "captures/wp18.png",
+            "drone": [
+              -81.9516758,
+              26.4507597,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 63.6,
+            "box_2d": [
+              325,
+              795,
+              381,
+              852
+            ]
+          },
+          {
+            "waypoint": 19,
+            "image": "captures/wp19.png",
+            "drone": [
+              -81.95161,
+              26.4507185,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 53.7,
+            "box_2d": [
+              326,
+              674,
+              377,
+              729
+            ]
+          },
+          {
+            "waypoint": 20,
+            "image": "captures/wp20.png",
+            "drone": [
+              -81.9515443,
+              26.4506773,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 42.7,
+            "box_2d": [
+              326,
+              553,
+              377,
+              608
+            ]
+          },
+          {
+            "waypoint": 21,
+            "image": "captures/wp21.png",
+            "drone": [
+              -81.9514785,
+              26.4506361,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 31.0,
+            "box_2d": [
+              326,
+              431,
+              377,
+              486
+            ]
+          },
+          {
+            "waypoint": 22,
+            "image": "captures/wp22.png",
+            "drone": [
+              -81.9514128,
+              26.4505949,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 19.5,
+            "box_2d": [
+              326,
+              308,
+              377,
+              363
+            ]
+          },
+          {
+            "waypoint": 23,
+            "image": "captures/wp23.png",
+            "drone": [
+              -81.951347,
+              26.4505536,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 9.2,
+            "box_2d": [
+              326,
+              186,
+              377,
+              241
+            ]
+          },
+          {
+            "waypoint": 24,
+            "image": "captures/wp24.png",
+            "drone": [
+              -81.9512813,
+              26.4505124,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 0.4,
+            "box_2d": [
+              326,
+              64,
+              377,
+              118
+            ]
+          }
+        ],
+        "captured_at": "2026-11-02T15:33:40+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9514948,
+          26.4510734
+        ]
+      },
+      "properties": {
+        "id": "condo-4-unit-303",
+        "building": "Condo 4",
+        "unit": "303",
+        "light_type": "lit window",
+        "severity": "medium",
+        "visible_from_beach": true,
+        "fix": "Close window coverings or turn off this room's lights to prevent coastal light pollution.",
+        "notify": "resident",
+        "height_m": 10.5,
+        "distance_from_drone_m": 38.9,
+        "method": "triangulated",
+        "image": "captures/wp17.png",
+        "box_2d": [
+          431,
+          515,
+          488,
+          568
+        ],
+        "views": [
+          {
+            "waypoint": 14,
+            "image": "captures/wp14.png",
+            "drone": [
+              -81.9519388,
+              26.4509246,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 69.4,
+            "box_2d": [
+              435,
+              878,
+              488,
+              934
+            ]
+          },
+          {
+            "waypoint": 15,
+            "image": "captures/wp15.png",
+            "drone": [
+              -81.951873,
+              26.4508834,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 60.8,
+            "box_2d": [
+              435,
+              759,
+              488,
+              815
+            ]
+          },
+          {
+            "waypoint": 16,
+            "image": "captures/wp16.png",
+            "drone": [
+              -81.9518073,
+              26.4508422,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 50.5,
+            "box_2d": [
+              433,
+              637,
+              488,
+              692
+            ]
+          },
+          {
+            "waypoint": 17,
+            "image": "captures/wp17.png",
+            "drone": [
+              -81.9517415,
+              26.450801,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 39.0,
+            "box_2d": [
+              431,
+              515,
+              488,
+              568
+            ]
+          },
+          {
+            "waypoint": 18,
+            "image": "captures/wp18.png",
+            "drone": [
+              -81.9516758,
+              26.4507597,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 27.4,
+            "box_2d": [
+              431,
+              394,
+              488,
+              448
+            ]
+          },
+          {
+            "waypoint": 19,
+            "image": "captures/wp19.png",
+            "drone": [
+              -81.95161,
+              26.4507185,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 16.2,
+            "box_2d": [
+              431,
+              270,
+              485,
+              325
+            ]
+          },
+          {
+            "waypoint": 20,
+            "image": "captures/wp20.png",
+            "drone": [
+              -81.9515443,
+              26.4506773,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 6.3,
+            "box_2d": [
+              431,
+              148,
+              485,
+              203
+            ]
+          },
+          {
+            "waypoint": 21,
+            "image": "captures/wp21.png",
+            "drone": [
+              -81.9514785,
+              26.4506361,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 358.1,
+            "box_2d": [
+              431,
+              26,
+              485,
+              82
+            ]
+          }
+        ],
+        "captured_at": "2026-11-02T15:33:40+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9514262,
+          26.4509538
+        ]
+      },
+      "properties": {
+        "id": "streetlight-3",
+        "building": "Estero Blvd streetlight",
+        "unit": null,
+        "light_type": "streetlight",
+        "severity": "high",
+        "visible_from_beach": true,
+        "fix": "Direct this light downward and use amber LEDs to protect sea turtles.",
+        "notify": "city",
+        "height_m": 7.2,
+        "distance_from_drone_m": 32.0,
+        "method": "triangulated",
+        "image": "captures/wp19.png",
+        "box_2d": [
+          551,
+          486,
+          566,
+          513
+        ],
+        "views": [
+          {
+            "waypoint": 16,
+            "image": "captures/wp16.png",
+            "drone": [
+              -81.9518073,
+              26.4508422,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 71.9,
+            "box_2d": [
+              552,
+              928,
+              569,
+              963
+            ]
+          },
+          {
+            "waypoint": 17,
+            "image": "captures/wp17.png",
+            "drone": [
+              -81.9517415,
+              26.450801,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 61.6,
+            "box_2d": [
+              550,
+              781,
+              569,
+              813
+            ]
+          },
+          {
+            "waypoint": 18,
+            "image": "captures/wp18.png",
+            "drone": [
+              -81.9516758,
+              26.4507597,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 49.0,
+            "box_2d": [
+              550,
+              634,
+              569,
+              663
+            ]
+          },
+          {
+            "waypoint": 19,
+            "image": "captures/wp19.png",
+            "drone": [
+              -81.95161,
+              26.4507185,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 35.0,
+            "box_2d": [
+              551,
+              486,
+              566,
+              513
+            ]
+          },
+          {
+            "waypoint": 20,
+            "image": "captures/wp20.png",
+            "drone": [
+              -81.9515443,
+              26.4506773,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 20.9,
+            "box_2d": [
+              551,
+              336,
+              566,
+              366
+            ]
+          },
+          {
+            "waypoint": 21,
+            "image": "captures/wp21.png",
+            "drone": [
+              -81.9514785,
+              26.4506361,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 8.4,
+            "box_2d": [
+              551,
+              187,
+              566,
+              218
+            ]
+          },
+          {
+            "waypoint": 22,
+            "image": "captures/wp22.png",
+            "drone": [
+              -81.9514128,
+              26.4505949,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 358.1,
+            "box_2d": [
+              551,
+              37,
+              566,
+              71
+            ]
+          }
+        ],
+        "captured_at": "2026-11-02T15:33:40+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9516891,
+          26.4511188
+        ]
+      },
+      "properties": {
+        "id": "streetlight-2",
+        "building": "Estero Blvd streetlight",
+        "unit": null,
+        "light_type": "streetlight",
+        "severity": "high",
+        "visible_from_beach": true,
+        "fix": "Retrofit this streetlight with a full cutoff fixture and amber bulb to keep light off the beach.",
+        "notify": "city",
+        "height_m": 7.2,
+        "distance_from_drone_m": 32.0,
+        "method": "triangulated",
+        "image": "captures/wp15.png",
+        "box_2d": [
+          550,
+          487,
+          567,
+          510
+        ],
+        "views": [
+          {
+            "waypoint": 12,
+            "image": "captures/wp12.png",
+            "drone": [
+              -81.9520703,
+              26.4510071,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 71.9,
+            "box_2d": [
+              550,
+              928,
+              569,
+              963
+            ]
+          },
+          {
+            "waypoint": 13,
+            "image": "captures/wp13.png",
+            "drone": [
+              -81.9520045,
+              26.4509658,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 61.6,
+            "box_2d": [
+              548,
+              781,
+              569,
+              813
+            ]
+          },
+          {
+            "waypoint": 14,
+            "image": "captures/wp14.png",
+            "drone": [
+              -81.9519388,
+              26.4509246,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 49.0,
+            "box_2d": [
+              552,
+              634,
+              569,
+              663
+            ]
+          },
+          {
+            "waypoint": 15,
+            "image": "captures/wp15.png",
+            "drone": [
+              -81.951873,
+              26.4508834,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 34.9,
+            "box_2d": [
+              550,
+              487,
+              567,
+              510
+            ]
+          },
+          {
+            "waypoint": 16,
+            "image": "captures/wp16.png",
+            "drone": [
+              -81.9518073,
+              26.4508422,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 20.9,
+            "box_2d": [
+              550,
+              337,
+              569,
+              365
+            ]
+          },
+          {
+            "waypoint": 17,
+            "image": "captures/wp17.png",
+            "drone": [
+              -81.9517415,
+              26.450801,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 8.4,
+            "box_2d": [
+              550,
+              187,
+              567,
+              218
+            ]
+          },
+          {
+            "waypoint": 18,
+            "image": "captures/wp18.png",
+            "drone": [
+              -81.9516758,
+              26.4507597,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 358.1,
+            "box_2d": [
+              552,
+              38,
+              569,
+              72
+            ]
+          }
+        ],
+        "captured_at": "2026-11-02T15:33:40+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9522148,
+          26.4514487
+        ]
+      },
+      "properties": {
+        "id": "streetlight-1",
+        "building": "Estero Blvd streetlight",
+        "unit": null,
+        "light_type": "streetlight lamp head",
+        "severity": "high",
+        "visible_from_beach": true,
+        "fix": "Please shield, lower the wattage, or turn off this streetlight to prevent disorienting sea turtle hatchlings.",
+        "notify": "city",
+        "height_m": 7.1,
+        "distance_from_drone_m": 32.0,
+        "method": "triangulated",
+        "image": "captures/wp07.png",
+        "box_2d": [
+          549,
+          487,
+          583,
+          513
+        ],
+        "views": [
+          {
+            "waypoint": 5,
+            "image": "captures/wp05.png",
+            "drone": [
+              -81.9525305,
+              26.4512956,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 61.5,
+            "box_2d": [
+              546,
+              782,
+              584,
+              811
+            ]
+          },
+          {
+            "waypoint": 6,
+            "image": "captures/wp06.png",
+            "drone": [
+              -81.9524648,
+              26.4512544,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 49.1,
+            "box_2d": [
+              549,
+              635,
+              583,
+              663
+            ]
+          },
+          {
+            "waypoint": 7,
+            "image": "captures/wp07.png",
+            "drone": [
+              -81.952399,
+              26.4512132,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 35.0,
+            "box_2d": [
+              549,
+              487,
+              583,
+              513
+            ]
+          },
+          {
+            "waypoint": 8,
+            "image": "captures/wp08.png",
+            "drone": [
+              -81.9523333,
+              26.4511719,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 21.0,
+            "box_2d": [
+              553,
+              338,
+              566,
+              365
+            ]
+          },
+          {
+            "waypoint": 9,
+            "image": "captures/wp09.png",
+            "drone": [
+              -81.9522675,
+              26.4511307,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 8.5,
+            "box_2d": [
+              553,
+              189,
+              566,
+              218
+            ]
+          },
+          {
+            "waypoint": 10,
+            "image": "captures/wp10.png",
+            "drone": [
+              -81.9522018,
+              26.4510895,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 358.1,
+            "box_2d": [
+              550,
+              38,
+              569,
+              72
+            ]
+          }
+        ],
+        "captured_at": "2026-11-02T15:33:40+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9520846,
+          26.4514459
+        ]
+      },
+      "properties": {
+        "id": "condo-2-unit-402",
+        "building": "Condo 2",
+        "unit": "402",
+        "light_type": "lit window",
+        "severity": "high",
+        "visible_from_beach": true,
+        "fix": "Please turn off interior lights or close blackout curtains to prevent disorienting sea turtle hatchlings.",
+        "notify": "resident",
+        "height_m": 14.5,
+        "distance_from_drone_m": 39.2,
+        "method": "triangulated",
+        "image": "captures/wp08.png",
+        "box_2d": [
+          327,
+          516,
+          376,
+          569
+        ],
+        "views": [
+          {
+            "waypoint": 6,
+            "image": "captures/wp06.png",
+            "drone": [
+              -81.9524648,
+              26.4512544,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 60.6,
+            "box_2d": [
+              327,
+              759,
+              376,
+              811
+            ]
+          },
+          {
+            "waypoint": 7,
+            "image": "captures/wp07.png",
+            "drone": [
+              -81.952399,
+              26.4512132,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 50.4,
+            "box_2d": [
+              327,
+              637,
+              376,
+              690
+            ]
+          },
+          {
+            "waypoint": 8,
+            "image": "captures/wp08.png",
+            "drone": [
+              -81.9523333,
+              26.4511719,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 39.1,
+            "box_2d": [
+              327,
+              516,
+              376,
+              569
+            ]
+          },
+          {
+            "waypoint": 9,
+            "image": "captures/wp09.png",
+            "drone": [
+              -81.9522675,
+              26.4511307,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 27.5,
+            "box_2d": [
+              327,
+              395,
+              376,
+              448
+            ]
+          }
+        ],
+        "captured_at": "2026-11-02T15:33:40+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9520205,
+          26.4514036
+        ]
+      },
+      "properties": {
+        "id": "condo-2-unit-403",
+        "building": "Condo 2",
+        "unit": "403",
+        "light_type": "lit window",
+        "severity": "medium",
+        "visible_from_beach": true,
+        "fix": "Install blinds or turn off the lights in this room to eliminate direct illumination toward the nesting beach.",
+        "notify": "resident",
+        "height_m": 14.5,
+        "distance_from_drone_m": 39.0,
+        "method": "triangulated",
+        "image": "captures/wp10.png",
+        "box_2d": [
+          323,
+          392,
+          381,
+          447
+        ],
+        "views": [
+          {
+            "waypoint": 10,
+            "image": "captures/wp10.png",
+            "drone": [
+              -81.9522018,
+              26.4510895,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 27.3,
+            "box_2d": [
+              323,
+              392,
+              381,
+              447
+            ]
+          },
+          {
+            "waypoint": 11,
+            "image": "captures/wp11.png",
+            "drone": [
+              -81.952136,
+              26.4510483,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 16.3,
+            "box_2d": [
+              323,
+              271,
+              381,
+              327
+            ]
+          },
+          {
+            "waypoint": 12,
+            "image": "captures/wp12.png",
+            "drone": [
+              -81.9520703,
+              26.4510071,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 6.4,
+            "box_2d": [
+              325,
+              149,
+              381,
+              204
+            ]
+          },
+          {
+            "waypoint": 13,
+            "image": "captures/wp13.png",
+            "drone": [
+              -81.9520045,
+              26.4509658,
+              9.0
+            ],
+            "heading_deg": 35.0,
+            "bearing_deg": 358.1,
+            "box_2d": [
+              325,
+              27,
+              381,
+              82
+            ]
+          }
+        ],
+        "captured_at": "2026-11-02T15:33:40+00:00"
+      }
+    }
+  ]
+}
