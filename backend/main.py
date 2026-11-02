@@ -22,10 +22,9 @@ from PIL import Image
 load_dotenv()
 
 API_KEY = os.getenv("GEMINI_API_KEY")
-MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")  # check the exact name in AI Studio
+MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")  # check the exact name in AI Studio
 MOCK = os.getenv("MOCK", "0") == "1" or not API_KEY
-FALLBACK_MODEL = os.getenv("GEMINI_FALLBACK_MODEL", "gemini-3.6-flash")
-LITE_MODEL = os.getenv("GEMINI_LITE_MODEL", "gemini-3.5-flash-lite")
+FALLBACK_MODEL = os.getenv("GEMINI_FALLBACK_MODEL", "gemini-3.8-flash")
 MAX_SIDE = 1600  # downscale big phone photos for speed
 
 PROMPT = """You are checking a night photo for lights that could disorient sea turtle
@@ -65,7 +64,7 @@ if not MOCK:
     from google import genai
     from google.genai import types  # noqa: F811
 
-    client = genai.Client(api_key=API_KEY)
+    client = genai.Client(api_key=API_KEY, http_options=types.HttpOptions(timeout=20_000))  # 20s cap
 
 
 def prep_image(raw: bytes) -> tuple[bytes, int, int]:
@@ -87,7 +86,7 @@ def prep_image(raw: bytes) -> tuple[bytes, int, int]:
     return buf.getvalue(), img.width, img.height
 
 
-RETRYABLE = ("503", "UNAVAILABLE", "429", "RESOURCE_EXHAUSTED", "overloaded", "high demand")
+RETRYABLE = ("timed out", "Timeout", "503", "UNAVAILABLE", "429", "RESOURCE_EXHAUSTED", "overloaded", "high demand")
 
 
 def _gemini_once(model: str, jpeg: bytes) -> dict:
@@ -107,7 +106,7 @@ def _gemini_once(model: str, jpeg: bytes) -> dict:
 def call_gemini(jpeg: bytes) -> dict:
     """Retry busy/rate-limit errors with backoff, then fall back to a second model."""
     last = None
-    for model in dict.fromkeys([MODEL, FALLBACK_MODEL, LITE_MODEL]):  # dedupe, keep order
+    for model in dict.fromkeys([MODEL, FALLBACK_MODEL]):  # dedupe, keep order
         for attempt in range(2):
             try:
                 result = _gemini_once(model, jpeg)

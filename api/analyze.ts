@@ -6,13 +6,13 @@ visible from the beach and shades/shielding would help. Ignore phone screens and
 Return JSON: {"lights":[{"label":string,"box_2d":[ymin,xmin,ymax,xmax] (0-1000),"possibleIssue":boolean,"advice":string}],"summary":string}.
 Use cautious wording ("possible issue"), never say "violation".`
 
-// 2.5 models are restricted for new API keys, so default to current Flash with a fallback.
+// Benchmarked Nov 2: Flash-Lite ~1s with a good box; 3.8 Flash was overloaded (minutes); 3.6 hit quota.
 const MODELS = [
-  process.env.GEMINI_MODEL || 'gemini-3.8-flash',
-  process.env.GEMINI_FALLBACK_MODEL || 'gemini-3.6-flash',
-  process.env.GEMINI_LITE_MODEL || 'gemini-3.5-flash-lite', // last resort: lighter, usually less congested
+  process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite',
+  process.env.GEMINI_FALLBACK_MODEL || 'gemini-3.8-flash',
 ].filter((m, i, a) => a.indexOf(m) === i)
 const RETRYABLE = new Set([429, 500, 503])
+const TIMEOUT_MS = 20_000 // never let a busy model hang the demo
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
 export default async function handler(req: Request): Promise<Response> {
@@ -33,11 +33,18 @@ export default async function handler(req: Request): Promise<Response> {
   let lastStatus = 0
   for (const model of MODELS) {
     for (let attempt = 0; attempt < 2; attempt++) {
-      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-        method: 'POST',
-        headers: { 'x-goog-api-key': key, 'content-type': 'application/json' },
-        body,
-      })
+      let r: Response
+      try {
+        r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+          method: 'POST',
+          headers: { 'x-goog-api-key': key, 'content-type': 'application/json' },
+          body,
+          signal: AbortSignal.timeout(TIMEOUT_MS),
+        })
+      } catch {
+        lastStatus = 504 // timed out: skip to the next model
+        break
+      }
       if (r.ok) {
         const data = await r.json()
         try {
