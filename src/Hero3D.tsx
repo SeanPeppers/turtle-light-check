@@ -3,11 +3,12 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { SpotLight, Stars, useAnimations, useFBX, useGLTF, useTexture } from '@react-three/drei'
 import { Bloom, EffectComposer, ToneMapping } from '@react-three/postprocessing'
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'
-import { Box3, CanvasTexture, Mesh, MeshStandardMaterial, type Material, PlaneGeometry, RepeatWrapping, Vector2, Vector3, type Group, type MeshBasicMaterial, type Texture } from 'three'
+import { Box3, CanvasTexture, Mesh, MeshBasicMaterial, MeshStandardMaterial, type Material, PlaneGeometry, RepeatWrapping, type ShaderMaterial, type SpotLight as SpotLightImpl, Vector2, Vector3, type Group, type Texture } from 'three'
 import { Water } from 'three/examples/jsm/objects/Water.js'
 
 // Moonlit night beach (when hatchlings emerge): dunes and a lit-up coastline at the top, surf at the bottom.
-// Turtles are animated GLB models (public/models) that crawl toward the water (+z = down the screen).
+// Turtles are animated GLB models (public/models). Scroll story: at the top of the page the coast is lit and the
+// hatchlings crawl inland toward the glow; scrolling turns the lights off and they turn around and head for the sea (+z).
 // Sand: Poly Haven "Aerial Beach 01" (CC0). Water normals: three.js examples (MIT).
 // Construction site: Majadroid "3D House Construction Site" (CC0), palette by Imphenzia.
 const START_Z = -12
@@ -38,6 +39,28 @@ function heightAt(x: number, z: number) {
   return slope + bumps
 }
 
+// 1 = coast lights on (top of page), 0 = lights off (scrolled down). Shared by everything that reacts to it.
+const story = { lights: 1 }
+// How far the user scrolls (as a fraction of the screen height) to turn the lights fully off.
+const LIGHTS_OFF_AT = 0.6
+
+function StoryDriver() {
+  const target = useRef(1)
+  useEffect(() => {
+    const update = () => (target.current = 1 - Math.min(1, scrollY / (innerHeight * LIGHTS_OFF_AT)))
+    update()
+    addEventListener('scroll', update, { passive: true })
+    return () => removeEventListener('scroll', update)
+  }, [])
+  useFrame((_, dt) => {
+    // Ease toward the scroll position so lights dim smoothly instead of snapping.
+    story.lights += (target.current - story.lights) * Math.min(1, dt * 3)
+    const l = story.lights
+    LAMP.color.setRGB(0.06 + 24 * l, 0.06 + 22 * l, 0.06 + 18 * l)
+  })
+  return null
+}
+
 const END_Z = 7.5 // just past the bottom edge of the screen
 const FADE_FROM = SHORE_Z + 2 // start fading once the turtle is swimming
 
@@ -60,7 +83,6 @@ function Turtle({ url, x, z, speed, scale }: (typeof TURTLES)[number]) {
     return { model: m, mats: list }
   }, [gltf.scene])
   const { actions, names } = useAnimations(gltf.animations, root)
-  const span = END_Z - START_Z
   const swimming = useRef(false)
 
   useEffect(() => {
@@ -70,16 +92,33 @@ function Turtle({ url, x, z, speed, scale }: (typeof TURTLES)[number]) {
     return () => void walk?.stop()
   }, [actions, names, x])
 
-  useFrame(({ clock }) => {
-    // Loop: crawl down the beach, swim out through the surf, fade away, then reappear at the dunes.
+  // Each turtle steers itself: z position, heading (0 = toward the sea, PI = inland) and a fade-in after respawning.
+  const st = useRef({ z, yaw: Math.PI, fadeIn: 1 })
+
+  useFrame((_, delta) => {
     const g = root.current!
-    const pz = START_Z + ((z - START_Z + clock.elapsedTime * speed * 3) % span)
+    const s = st.current
+    const dt = Math.min(delta, 0.1)
+    const inWater = s.z > SHORE_Z + 0.6
+    // Lights on: disoriented, they crawl inland toward the glow. Lights off: they turn around toward the moonlit sea.
+    // Once swimming they keep going out.
+    const targetYaw = !inWater && story.lights > 0.5 ? Math.PI : 0
+    s.yaw += (targetYaw - s.yaw) * Math.min(1, dt * 2)
+    s.z += Math.cos(s.yaw) * speed * 3 * dt
+    // Off the bottom (swam away) or lost in the dunes: hatch again from a nest mid-beach.
+    if (s.z > END_Z || s.z < START_Z) {
+      s.z = -8 + Math.random() * 5
+      s.fadeIn = 0
+    }
+    s.fadeIn = Math.min(1, s.fadeIn + dt / 1.2)
+
+    const pz = s.z
     g.position.z = pz
+    g.rotation.y = s.yaw
     // On sand follow the ground; in the water float just under the surface.
     g.position.y = Math.max(heightAt(x, pz), -0.12)
 
     // Walk on land, swim once in the water.
-    const inWater = pz > SHORE_Z + 0.6
     if (inWater !== swimming.current) {
       swimming.current = inWater
       const walk = actions[names.find((n) => /walk$/i.test(n)) ?? '']
@@ -91,8 +130,8 @@ function Turtle({ url, x, z, speed, scale }: (typeof TURTLES)[number]) {
       }
     }
 
-    // Fade in at the dunes, fade out as it swims off the bottom of the page.
-    const opacity = Math.min(1, (pz - START_Z) / 1.5, (END_Z - pz) / (END_Z - FADE_FROM))
+    // Fade in after hatching, fade out into the dunes or as it swims off the bottom of the page.
+    const opacity = Math.min(s.fadeIn, (pz - START_Z) / 1.5, (END_Z - pz) / (END_Z - FADE_FROM))
     for (const m of mats) m.opacity = Math.max(0, opacity)
   })
   return (
@@ -219,6 +258,8 @@ const SITE = [
 ]
 const FLOODS = [-44, -28, -12, 0, 13, 29, 45].map((x, i) => ({ x, z: -45 - (i % 2) * 4 }))
 const POLE = 5
+// One shared lamp material so the scroll story can dim every floodlight at once (emissive > 1 so Bloom glares).
+const LAMP = new MeshBasicMaterial({ toneMapped: false })
 
 function SiteModel({ url, x, z, rot, s }: (typeof SITE)[number]) {
   const fbx = useFBX(url)
@@ -243,22 +284,32 @@ function SiteModel({ url, x, z, rot, s }: (typeof SITE)[number]) {
 
 function Floodlight({ x, z }: { x: number; z: number }) {
   const y = heightAt(x, z)
+  const light = useRef<SpotLightImpl>(null)
+  useFrame(() => {
+    const l = light.current!
+    l.intensity = 70 * story.lights
+    // drei's volumetric beam is a child mesh with an `opacity` uniform.
+    l.traverse((o) => {
+      const u = ((o as Mesh).material as ShaderMaterial | undefined)?.uniforms?.opacity
+      if (u) u.value = 0.35 * story.lights
+    })
+  })
   return (
     <group position={[x, y, z]}>
       <mesh position={[0, POLE / 2, 0]}>
         <cylinderGeometry args={[0.12, 0.18, POLE, 8]} />
         <meshStandardMaterial color="#5b5f66" metalness={0.6} roughness={0.5} />
       </mesh>
-      {/* 2x2 lamp bank; emissive > 1 so Bloom makes it glare */}
+      {/* 2x2 lamp bank */}
       {[-0.55, 0.55].flatMap((dx) =>
         [-0.45, 0.45].map((dy) => (
-          <mesh key={`${dx}${dy}`} position={[dx, POLE + 0.6 + dy, 0.2]} rotation-x={0.35}>
+          <mesh key={`${dx}${dy}`} position={[dx, POLE + 0.6 + dy, 0.2]} rotation-x={0.35} material={LAMP}>
             <boxGeometry args={[0.8, 0.6, 0.2]} />
-            <meshBasicMaterial color={[24, 22, 18]} toneMapped={false} />
           </mesh>
         )),
       )}
       <SpotLight
+        ref={light}
         position={[0, POLE + 0.6, 0.4]}
         color="#fff3d6"
         intensity={70}
@@ -313,13 +364,23 @@ const CONDOS = Array.from({ length: 34 }, (_, i) => ({
 }))
 
 function Skyline() {
-  const textures = useMemo(() => [1, 2, 3].map(windowTexture), [])
+  // Three shared facade materials (one per window pattern) so the scroll story can dim every window together.
+  const materials = useMemo(
+    () =>
+      [1, 2, 3].map(
+        (seed) => new MeshStandardMaterial({ color: '#1c2230', emissive: '#ffffff', emissiveMap: windowTexture(seed), roughness: 0.8 }),
+      ),
+    [],
+  )
+  useFrame(() => {
+    // A few windows stay faintly lit even with the lights "off", like a real coastline at night.
+    for (const m of materials) m.emissiveIntensity = 0.12 + 1.4 * story.lights
+  })
   return (
     <>
       {CONDOS.map((b, i) => (
-        <mesh key={i} position={[b.x, heightAt(b.x, b.z) + b.h / 2 - 0.5, b.z]}>
+        <mesh key={i} position={[b.x, heightAt(b.x, b.z) + b.h / 2 - 0.5, b.z]} material={materials[b.tex]}>
           <boxGeometry args={[b.w, b.h, b.d]} />
-          <meshStandardMaterial color="#1c2230" emissive="#ffffff" emissiveMap={textures[b.tex]} emissiveIntensity={1.5} roughness={0.8} />
         </mesh>
       ))}
     </>
@@ -352,6 +413,7 @@ export default function Hero3D() {
       </mesh>
       <hemisphereLight args={['#5d76b0', '#1c1812', 0.6]} />
       <directionalLight position={MOON.clone().multiplyScalar(20)} intensity={1.1} color="#b4c8ff" />
+      <StoryDriver />
       <Beach />
       <Skyline />
       <ConstructionSite />
