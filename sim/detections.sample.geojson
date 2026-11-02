@@ -1,0 +1,41 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-81.9512, 26.4521] },
+      "properties": {
+        "id": "condo-3-unit-402",
+        "building": "Condo 3",
+        "unit": "402",
+        "light_type": "bare balcony bulb",
+        "severity": "high",
+        "visible_from_beach": true,
+        "fix": "Turn off or replace with a shielded amber fixture",
+        "notify": "resident",
+        "image": "captures/wp03.png",
+        "box_2d": [412, 518, 455, 560],
+        "captured_at": "2026-11-02T22:05:00-05:00",
+        "waypoint": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-81.9498, 26.4512] },
+      "properties": {
+        "id": "streetlight-7",
+        "building": "Estero Blvd streetlight",
+        "unit": null,
+        "light_type": "unshielded streetlight",
+        "severity": "medium",
+        "visible_from_beach": true,
+        "fix": "City: add a back shield or switch to a turtle-safe amber LED",
+        "notify": "city",
+        "image": "captures/wp05.png",
+        "box_2d": [120, 300, 160, 340],
+        "captured_at": "2026-11-02T22:07:30-05:00",
+        "waypoint": 5
+      }
+    }
+  ]
+}
