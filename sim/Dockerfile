@@ -11,6 +11,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python3-pip mesa-utils libgl1-mesa-dri \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install --no-cache-dir --break-system-packages google-genai python-dotenv pillow
+RUN pip3 install --no-cache-dir --break-system-packages google-genai python-dotenv pillow imageio-ffmpeg
 
 WORKDIR /sim

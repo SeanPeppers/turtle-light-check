@@ -40,3 +40,4 @@ frames/
 
 # team uses pnpm-lock.yaml; ignore npm lockfile if someone runs npm install
 package-lock.json
+.chase_frames/
