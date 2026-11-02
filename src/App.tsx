@@ -54,10 +54,20 @@ export default function App() {
         <div className="hero-text">
           <h1>Turtle Light Check</h1>
           <p>Baby sea turtles crawl toward the brightest thing they can see. That should be the moon over the Gulf, not your porch light.</p>
-          <a className="btn" href="#check">
-            Check a photo <ChevronDown aria-hidden />
-          </a>
+          <div className="hero-actions">
+            <a className="btn" href="#check">
+              Check a photo <ChevronDown aria-hidden />
+            </a>
+            <a className="btn btn-ghost" href="#map">
+              See the map
+            </a>
+          </div>
         </div>
+        <ul className="facts" aria-label="Sea turtle facts">
+          <li><strong>May 1 – Oct 31</strong> Sea turtle nesting season on Lee County beaches</li>
+          <li><strong>Brightest horizon</strong> Hatchlings find the sea by heading toward the brightest light</li>
+          <li><strong>~1 in 1,000</strong> Estimated hatchlings that survive to adulthood</li>
+        </ul>
       </header>
       <Analyzer onResult={onResult} />
       <div className="analyzer card">
