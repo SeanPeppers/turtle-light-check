@@ -21,8 +21,9 @@ export type MapLight = {
 }
 
 // Shape returned by api/analyze.ts
-export type Light = { label: string; box_2d: [number, number, number, number]; possibleIssue: boolean; advice: string }
-export type Result = { lights: Light[]; summary: string; model?: string }
+export type Light = { label: string; box_2d: [number, number, number, number]; possibleIssue: boolean; advice: string; rule?: string }
+export type Shadow = { box_2d: [number, number, number, number]; description: string }
+export type Result = { lights: Light[]; shadows?: Shadow[]; summary: string; model?: string }
 
 export const SEVERITY_COLOR: Record<Severity, string> = {
   high: '#ff3b30',

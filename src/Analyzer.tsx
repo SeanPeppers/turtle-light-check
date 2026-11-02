@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { AlertTriangle, CheckCircle2, Loader2, Upload } from 'lucide-react'
 import type { Result } from './lights'
+import { FWC_HOTLINE, LEE_RULES, nestingStatus } from './leeRules'
 
 // Shrink to <=1600px JPEG before upload: keeps requests under Vercel's 4.5 MB body limit
 // and makes Gemini faster. (GPS is read from the original file, not this copy.)
@@ -45,6 +46,15 @@ export default function Analyzer({ onResult }: { onResult?: (result: Result, fil
         ctx.strokeRect(x, y, w, h)
         ctx.fillText(l.label, x, Math.max(y - 6, 18))
       }
+      // Shadows cast by artificial light (LDC 14-73(a)(2)(a)): dashed yellow
+      ctx.setLineDash([12, 8])
+      for (const sh of result?.shadows ?? []) {
+        const [y1, x1, y2, x2] = sh.box_2d
+        ctx.strokeStyle = ctx.fillStyle = '#ffd60a'
+        ctx.strokeRect((x1 / 1000) * img.width, (y1 / 1000) * img.height, ((x2 - x1) / 1000) * img.width, ((y2 - y1) / 1000) * img.height)
+        ctx.fillText('shadow', (x1 / 1000) * img.width, Math.max((y1 / 1000) * img.height - 6, 18))
+      }
+      ctx.setLineDash([])
       URL.revokeObjectURL(url)
     }
     img.src = url
@@ -75,6 +85,9 @@ export default function Analyzer({ onResult }: { onResult?: (result: Result, fil
   return (
     <section id="check" className="analyzer card">
       <h2>Check your lights</h2>
+      <p className="muted">
+        {nestingStatus().label} Report a disoriented turtle to FWC: <a href={`tel:${FWC_HOTLINE}`}>{FWC_HOTLINE}</a>
+      </p>
       <label className="upload">
         <Upload aria-hidden /> Choose or take a night photo
         <input
@@ -99,13 +112,31 @@ export default function Analyzer({ onResult }: { onResult?: (result: Result, fil
               <li key={i}>
                 {l.possibleIssue ? <AlertTriangle aria-label="Possible issue" /> : <CheckCircle2 aria-label="OK" />}{' '}
                 <strong>{l.label}</strong>: {l.advice}
+                {l.possibleIssue && l.rule && <small className="rule"> · {l.rule}</small>}
               </li>
             ))}
           </ul>
+          {!!result.shadows?.length && (
+            <p className="shadow-note">
+              <AlertTriangle aria-hidden /> <strong>Shadow from artificial light detected</strong>
+              {' '}({result.shadows.map((s) => s.description).join('; ')}). Under LDC 14-73(a)(2)(a) a shadow cast by
+              artificial lighting is a rebuttable presumption of a violation.
+            </p>
+          )}
           <small>
             Results are AI estimates, not a code-enforcement finding. Confirm against current Lee County
             turtle-lighting rules.
           </small>
+          <details className="rules">
+            <summary>Lee County rules this check uses</summary>
+            <ul>
+              {LEE_RULES.map((r, i) => (
+                <li key={i}>
+                  <strong>{r.code}</strong>: {r.text}
+                </li>
+              ))}
+            </ul>
+          </details>
         </div>
       )}
     </section>

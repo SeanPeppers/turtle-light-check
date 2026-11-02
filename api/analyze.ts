@@ -1,9 +1,22 @@
 // Vercel serverless function. Keeps GEMINI_API_KEY server-side (never in the browser bundle).
 // Also served by `pnpm dev` through the dev-api plugin in vite.config.ts.
-const PROMPT = `You review a night photo of a beach-facing property for sea-turtle lighting problems.
-Find every visible light source (bulbs, lamps, fixtures, bright windows). For each, judge whether it could be
-visible from the beach and shades/shielding would help. Ignore phone screens and lens glare/reflections.
-Return JSON: {"lights":[{"label":string,"box_2d":[ymin,xmin,ymax,xmax] (0-1000),"possibleIssue":boolean,"advice":string}],"summary":string}.
+const PROMPT = `You review a night photo of a beach-facing property in Lee County, Florida (Sanibel, Fort Myers Beach)
+for sea-turtle lighting problems, using the Lee County Land Development Code, Ch. 14, Art. II, Div. 2:
+- LDC 14-76(d): exterior fixtures must be long wavelength, downward directed, full cutoff, fully shielded.
+- LDC 14-72: long wavelength = 560 nm or greater (amber, orange, red). White, blue or green light is not.
+  "Fully shielded" = the bulb, lamp or glowing lens is not directly visible.
+- LDC 14-79: minimize interior light from doors and windows visible from the beach (blinds/curtains closed).
+- Decorative uplighting on buildings or landscaping should be off.
+- LDC 14-73(a)(2)(a): a SHADOW cast by artificial lighting on an opaque object (person, chair, dune, sand,
+  wall, vegetation) is a rebuttable presumption of a violation. Look carefully for shadows caused by artificial
+  light, not moonlight.
+
+Find every visible light source (bulbs, lamps, fixtures, bright windows, uplights). Ignore phone screens, lens
+glare and reflections. For each light give a short "rule" naming the LDC section it most likely concerns, or ""
+if it looks compliant. Also list any shadows cast by artificial light.
+
+Return JSON: {"lights":[{"label":string,"box_2d":[ymin,xmin,ymax,xmax] (0-1000),"possibleIssue":boolean,
+"advice":string,"rule":string}],"shadows":[{"box_2d":[ymin,xmin,ymax,xmax],"description":string}],"summary":string}.
 Use cautious wording ("possible issue"), never say "violation".`
 
 // Benchmarked Nov 2: Flash-Lite ~1s with a good box; 3.8 Flash was overloaded (minutes); 3.6 hit quota.
