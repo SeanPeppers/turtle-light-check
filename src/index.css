@@ -94,3 +94,9 @@ a { color: #ffd38a; }
   border: 1px solid var(--glass-edge); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
   font-size: 0.95rem; font-weight: 500; line-height: 1.35; color: var(--muted); text-shadow: var(--legible); }
 .facts strong { display: block; font-weight: 600; font-size: 1.15rem; color: #ffe2b0; }
+
+/* Drone demo video above the map: click to play */
+.demo-video { margin: 1rem 0 1.25rem; }
+.demo-video video { display: block; width: 100%; height: auto; border-radius: 0.9rem; border: 1px solid var(--glass-edge);
+  background: #050d1a; box-shadow: 0 10px 40px rgb(0 0 0 / 0.5); }
+.demo-video figcaption { margin-top: 0.5rem; font-size: 0.9rem; }

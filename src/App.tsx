@@ -75,6 +75,13 @@ export default function App() {
         <p className="muted">
           Our drone flew the beach by the Fort Myers Beach pier and pinned every light it could see from the sand.{SIM_IS_SAMPLE && ' (Sample data for now.)'} Photos you check show up here too.
         </p>
+        {/* Click-to-play only: no autoplay, and preload="none" so the video isn't downloaded until someone presses play. */}
+        <figure className="demo-video">
+          <video controls preload="none" playsInline poster="/demo-poster.jpg" width={1280} height={720}>
+            <source src="/demo.mp4" type="video/mp4" />
+          </video>
+          <figcaption className="muted">Watch the drone patrol: it flies the beach in our simulation and pins each light it sees.</figcaption>
+        </figure>
         <LightMap
           lights={[...SIM_LIGHTS, ...photoLights]}
           dronePath={DRONE_PATH}
