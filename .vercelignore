@@ -4,3 +4,5 @@
 backend/
 node_modules/
 dist/
+sim/demo.mp4
+sim/*.sdf
