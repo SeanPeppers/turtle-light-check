@@ -1,42 +1,32 @@
 # Turtle Light Check: setup
 
-## How it works
+## How it fits together
 ```
-Photo / Gazebo drone frame
-  → frontend gets a location (EXIF GPS, browser GPS, click on map, or Gazebo pose CSV)
-  → POST /api/analyze  (image + lat + lng)
-  → backend sends image to Gemini → JSON list of lights with boxes + "possible_issue"/"ok" + fix tip
-  → frontend draws boxes on the photo AND highlights each light on the satellite map
+Phone photo ──► src/Analyzer.tsx ──► /api/analyze (api/analyze.ts → Gemini) ──► boxes on the photo
+                     │                                                              │
+                     └── GPS from photo EXIF (or click the map) ──────────────────► src/LightMap.tsx
+Gazebo drone sim ──► sim/detections.geojson ──────────────────────────────────────► src/LightMap.tsx
 ```
+- **Frontend:** Vite + React 19 + TypeScript at the repo root. A 3D hero, the photo analyzer, and the satellite map.
+- **Gemini:** `api/analyze.ts`. It runs as a Vercel serverless function in production and through a small Vite plugin in `pnpm dev`. It defaults to `gemini-3.8-flash`, retries 429/503 errors (waiting 1s, 2s, then 4s), then falls back to `gemini-3.6-flash`.
+- **Map:** `src/LightMap.tsx` shows every light as a highlighted pin (red/orange/yellow = possible issue by severity, green = OK). The drone's path is a dashed line. `src/lights.ts` converts both photo results and sim GeoJSON into one `MapLight` shape.
+- **Sim:** writes `sim/detections.geojson` in the format described in `sim/README.md`. The map loads it automatically, falling back to `detections.sample.geojson`. Capture images in `sim/captures/` show up in the map popups.
 
-## Backend (FastAPI + Gemini)
+## Run it
 ```bash
-cd backend
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env        # paste GEMINI_API_KEY into .env, never commit it
-uvicorn main:app --reload --port 8000
+cp .env.example .env     # paste GEMINI_API_KEY (never commit .env)
+pnpm install
+pnpm dev                 # http://localhost:5173. /api/analyze works locally too
 ```
-No key yet? Leave it blank. The backend runs in **MOCK mode** (boxes the brightest spot, no API call).
-Check: http://localhost:8000/api/health
 
-## Frontend (React + Vite + Leaflet)
+## Deploy
+Push to Vercel and set `GEMINI_API_KEY` in Project → Settings → Environment Variables.
+
+## Optional: prompt test bench
+`backend/` is a standalone FastAPI version of the analyzer (`/api/analyze`, multipart upload) used for quick prompt testing with curl:
 ```bash
-cd map-demo
-npm install
-npm run dev                 # http://localhost:5173, /api is proxied to :8000
+cd backend && python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt && python -m uvicorn main:app --reload --port 8000
+curl -F "file=@test_images/porch_bare.jpg" http://localhost:8000/api/analyze
 ```
-Click **Load sample pins** to see the map without the backend.
-
-## Drone mode (Gazebo)
-1. Record the Gazebo camera flythrough → `flythrough.mp4`
-2. Log the drone pose each second → `poses.csv` with columns `t,x,y` (seconds, meters; x = east, y = north). See `tools/sample_poses.csv`.
-3. `pip install opencv-python-headless && python tools/extract_frames.py flythrough.mp4 frames/`
-4. In the app: **Drone mode** → select all `frames/*.jpg` **and** `poses.csv` together.
-   Frame `frame_0007.jpg` is matched to the pose at `t=7`, and Gazebo x/y meters are converted to lat/lng around Fort Myers Beach.
-
-## Shared finding shape (one per detected light)
-```js
-{ id, lat, lng, status: "possible_issue" | "ok", type, color, bulb_visible,
-  fix, box_2d: [ymin, xmin, ymax, xmax] /* 0-1000 */, source: "photo" | "drone", frameTime }
-```
+The app doesn't use it. If you change the prompt there, copy it into `api/analyze.ts`.

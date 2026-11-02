@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { AlertTriangle, CheckCircle2, Loader2, Upload } from 'lucide-react'
-
-type Light = { label: string; box_2d: [number, number, number, number]; possibleIssue: boolean; advice: string }
-type Result = { lights: Light[]; summary: string }
+import type { Result } from './lights'
 
 const toBase64 = (f: File) =>
   new Promise<string>((res, rej) => {
@@ -12,7 +10,7 @@ const toBase64 = (f: File) =>
     r.readAsDataURL(f)
   })
 
-export default function Analyzer() {
+export default function Analyzer({ onResult }: { onResult?: (result: Result, file: File) => void }) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const [file, setFile] = useState<File | null>(null)
   const [result, setResult] = useState<Result | null>(null)
@@ -61,6 +59,7 @@ export default function Analyzer() {
       const data = await r.json()
       if (!r.ok) throw new Error(data.error ?? 'Analysis failed')
       setResult(data)
+      onResult?.(data, f)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Analysis failed')
     } finally {
