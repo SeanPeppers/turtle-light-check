@@ -10,9 +10,15 @@ The Gulf is at y < 0, the dunes at y ~ 12, the buildings at y ~ 40.
 import math
 from pathlib import Path
 
-# ponytail: placeholder origin near Fort Myers Beach; swap for a surveyed point if it matters.
-ORIGIN_LAT = 26.4500
-ORIGIN_LON = -81.9480
+# Real location: the sand in front of the Lani Kai, just south-east of the Fort Myers Beach pier
+# (OpenStreetMap: Lani Kai 26.4513, -81.9517; pier 26.4526, -81.9566), moved 40 m toward the Gulf.
+# The shore there runs south-east, 125 degrees, measured from Pink Shell Beach Resort to Outrigger
+# Beach Resort, so the world's +x (along the shore) points 125 degrees and +y (inland) points 35 degrees.
+# The buildings themselves are synthetic.
+ORIGIN_LAT = 26.45101
+ORIGIN_LON = -81.95197
+SHORE_BEARING_DEG = 125.0
+INLAND_BEARING_DEG = SHORE_BEARING_DEG - 90.0
 
 WORLD_NAME = "beach"
 DRONE_NAME = "drone"
@@ -41,8 +47,11 @@ WAYPOINT_XS = list(range(-96, 97, WAYPOINT_SPACING_M))
 
 
 def to_lat_lon(x: float, y: float) -> tuple[float, float]:
-    lat = ORIGIN_LAT + y / 111_320.0
-    lon = ORIGIN_LON + x / (111_320.0 * math.cos(math.radians(ORIGIN_LAT)))
+    shore, inland = math.radians(SHORE_BEARING_DEG), math.radians(INLAND_BEARING_DEG)
+    east = x * math.sin(shore) + y * math.sin(inland)
+    north = x * math.cos(shore) + y * math.cos(inland)
+    lat = ORIGIN_LAT + north / 111_320.0
+    lon = ORIGIN_LON + east / (111_320.0 * math.cos(math.radians(ORIGIN_LAT)))
     return lat, lon
 
 

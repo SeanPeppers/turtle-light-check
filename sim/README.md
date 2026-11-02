@@ -2,7 +2,9 @@
 
 A simulated drone flies along a beach at night, facing inland, and photographs the buildings behind the dunes at 25 waypoints 8 m apart. Gemini boxes every artificial light in each photo. Because the drone's GPS position is known at every waypoint, the same light seen from several waypoints is triangulated into a real position (latitude, longitude, height). The position comes from the drone track and pixels only; the scene's building list is used afterwards to name the unit (standing in for a parcel lookup) and to score the run.
 
-Last full run: 9 of 9 lit lights found, 0 false alarms, 0.29 m mean location error, 3 Gemini requests.
+The beach is placed at its real location: the sand in front of the Lani Kai, next to the Fort Myers Beach pier, with the shore angled the way it really runs (125 degrees, south-east). The buildings are synthetic.
+
+Last full run: 9 of 9 lit lights found, 1 false alarm, 0.16 m mean location error, 3 Gemini requests. Gemini's answers vary a little between runs; the previous run had 0 false alarms.
 
 ## Output for the Leaflet map
 

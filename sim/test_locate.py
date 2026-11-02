@@ -95,7 +95,12 @@ sweep("10 px jitter", 2.0, noise_px=10.0)
 sweep("5 px jitter, Gemini misses 20% of boxes", 2.0, max_missed=6, noise_px=5.0, drop=0.2)
 sweep("5 px jitter, 3 invented boxes per frame", 1.5, max_false=2, noise_px=5.0, false_per_frame=3)
 
-# Projection of the world into lat/lon is about 1 m per 1/111320 deg.
-lat, lon = scene.to_lat_lon(0, 111.32)
-assert abs(lat - scene.ORIGIN_LAT - 0.001) < 1e-9 and lon == scene.ORIGIN_LON
+# World to lat/lon keeps distances and points +y inland (north-east at Fort Myers Beach).
+lat, lon = scene.to_lat_lon(0, 100)
+north = (lat - scene.ORIGIN_LAT) * 111_320
+east = (lon - scene.ORIGIN_LON) * 111_320 * math.cos(math.radians(scene.ORIGIN_LAT))
+assert abs(math.hypot(east, north) - 100) < 1e-6
+assert abs(math.degrees(math.atan2(east, north)) - scene.INLAND_BEARING_DEG) < 1e-6
+lat, lon = scene.to_lat_lon(100, 0)
+assert lat < scene.ORIGIN_LAT and lon > scene.ORIGIN_LON  # along the shore is south-east
 print("ok")

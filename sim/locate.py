@@ -42,7 +42,7 @@ def ray(u, v):
 
 
 def bearing_deg(u):
-    """Compass bearing from the drone to a pixel column; the drone faces north (0 deg)."""
+    """Bearing to a pixel column relative to where the drone faces; add the drone heading for a compass bearing."""
     a, _ = ray(u, 0)
     return math.degrees(math.atan(a)) % 360
 
@@ -148,7 +148,14 @@ def locate_lights(frames):
         final = [(fi, di) for fi, di, _ in support(point, frames) if (fi, di) not in used]
         if len(final) < MIN_VIEWS:
             continue
-        point = refine(final, frames) or point
+        point = refine(final, frames)
+        if point is None:
+            continue
+        # Keep only views that still agree with the refined point.
+        agree = {(fi, di) for fi, di, _ in support(point, frames)}
+        final = [v for v in final if v in agree]
+        if len(final) < MIN_VIEWS:
+            continue
         used.update(final)
         lights.append({"point": point, "views": final})
     return lights
