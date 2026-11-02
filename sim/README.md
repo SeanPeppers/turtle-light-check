@@ -51,6 +51,27 @@ python3 fly.py                           # flies, calls Gemini, writes the two G
 
 `run.sh` passes the X display and `/dev/dri` through and loads `GEMINI_API_KEY` from the repo's `.env`. `GEMINI_MODEL` overrides the model (default `gemini-3.5-flash-lite`, which answered fastest on 2026-11-02).
 
+## Demo
+
+`demo.py` replays the last `fly.py` results (no Gemini calls, same every time). The drone glides along the beach; at each waypoint a sight line is drawn to every light Gemini saw in that photo, and a marker drops where two sight lines meet (red: resident, orange: city streetlight).
+
+Live, in the Gazebo window (the GUI camera follows the drone):
+
+```bash
+sim/run.sh                               # on the host
+gz sim -r world.sdf &                    # in the container; wait for the window
+python3 demo.py                          # about 25 s; rerun any time, it clears the old markers
+```
+
+Video, rendered headless from a chase camera, framed by the drone photo with Gemini's boxes, a real map of Fort Myers Beach (OpenStreetMap tiles, cached in `maptiles/`) with the drone track and located lights, and a log of who gets notified:
+
+```bash
+gz sim -s -r --headless-rendering world.sdf &
+python3 demo.py --record                 # writes demo.mp4 (1920x1080, about 26 s); takes about 7 min
+```
+
+`--record` reads chase frames that Gazebo writes to `.chase_frames/` instead of subscribing to the camera, because an active image subscription makes gz-transport service calls from Python stall.
+
 ## Gemini quota
 
 The free tier allows 20 requests per model per day. `fly.py` sends 9 photos per request (3 per flight) and caches answers in `captures/gemini_cache.json`, keyed on the world, model, prompt and waypoint, so rerunning an unchanged scene costs nothing. On a 429 it stops with a message instead of retrying; switch `GEMINI_MODEL`, use another key, or enable billing.
@@ -63,3 +84,4 @@ The free tier allows 20 requests per model per day. `fly.py` sends 9 photos per 
 | `locate.py` | pure geometry: pixel to ray, two-view triangulation, multi-view verification, least squares |
 | `fly.py` | drives the drone, calls Gemini, writes the GeoJSON |
 | `test_locate.py` | checks the geometry against the scene with exact, noisy, missing and invented boxes |
+| `demo.py` | demo flight for the Gazebo GUI, or `--record` for `demo.mp4` |
