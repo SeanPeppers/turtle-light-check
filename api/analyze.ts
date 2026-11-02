@@ -10,6 +10,7 @@ Use cautious wording ("possible issue"), never say "violation".`
 const MODELS = [
   process.env.GEMINI_MODEL || 'gemini-3.8-flash',
   process.env.GEMINI_FALLBACK_MODEL || 'gemini-3.6-flash',
+  process.env.GEMINI_LITE_MODEL || 'gemini-3.5-flash-lite', // last resort: lighter, usually less congested
 ].filter((m, i, a) => a.indexOf(m) === i)
 const RETRYABLE = new Set([429, 500, 503])
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
@@ -28,10 +29,10 @@ export default async function handler(req: Request): Promise<Response> {
     generationConfig: { responseMimeType: 'application/json', temperature: 0.2 },
   })
 
-  // Retry busy / rate-limited responses (1s, 2s, 4s), then try the fallback model.
+  // Retry busy / rate-limited responses (1s, 2s), then move down the model list.
   let lastStatus = 0
   for (const model of MODELS) {
-    for (let attempt = 0; attempt < 3; attempt++) {
+    for (let attempt = 0; attempt < 2; attempt++) {
       const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
         method: 'POST',
         headers: { 'x-goog-api-key': key, 'content-type': 'application/json' },

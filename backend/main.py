@@ -25,6 +25,7 @@ API_KEY = os.getenv("GEMINI_API_KEY")
 MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")  # check the exact name in AI Studio
 MOCK = os.getenv("MOCK", "0") == "1" or not API_KEY
 FALLBACK_MODEL = os.getenv("GEMINI_FALLBACK_MODEL", "gemini-3.6-flash")
+LITE_MODEL = os.getenv("GEMINI_LITE_MODEL", "gemini-3.5-flash-lite")
 MAX_SIDE = 1600  # downscale big phone photos for speed
 
 PROMPT = """You are checking a night photo for lights that could disorient sea turtle
@@ -106,8 +107,8 @@ def _gemini_once(model: str, jpeg: bytes) -> dict:
 def call_gemini(jpeg: bytes) -> dict:
     """Retry busy/rate-limit errors with backoff, then fall back to a second model."""
     last = None
-    for model in dict.fromkeys([MODEL, FALLBACK_MODEL]):  # dedupe, keep order
-        for attempt in range(3):
+    for model in dict.fromkeys([MODEL, FALLBACK_MODEL, LITE_MODEL]):  # dedupe, keep order
+        for attempt in range(2):
             try:
                 result = _gemini_once(model, jpeg)
                 result["_model"] = model
