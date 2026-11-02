@@ -16,6 +16,8 @@ export type MapLight = {
   waypoint?: number
   heightM?: number
   distanceM?: number
+  /** which lighting rule the drone flagged (or why it passed) */
+  rule?: string
   /** drone positions [lat, lng] this light was triangulated from (draw sight lines to it) */
   views?: [number, number][]
 }
@@ -66,6 +68,7 @@ type SimFeature = {
     image?: string
     waypoint?: number
     height_m?: number
+    rule?: string
     distance_from_drone_m?: number
     views?: { waypoint: number; image: string; drone: [number, number, number] }[]
   }
@@ -90,6 +93,7 @@ export function simToMapLights(geo: { features: SimFeature[] }, images: Record<s
         building: [p.building, p.unit].filter(Boolean).join(' · ') || undefined,
         waypoint: p.waypoint ?? p.views?.find((v) => v.image === p.image)?.waypoint,
         heightM: p.height_m,
+        rule: p.rule,
         distanceM: p.distance_from_drone_m,
         views: p.views?.map((v) => [v.drone[1], v.drone[0]] as [number, number]),
         image: p.image ? images[`../sim/${p.image}`] : undefined,

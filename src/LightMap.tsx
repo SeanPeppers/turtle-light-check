@@ -80,6 +80,7 @@ export default function LightMap({ lights, dronePath = [], placing, onPlace, foc
                     <b>{l.severity === 'ok' ? '✅ OK' : `⚠️ Possible issue (${l.severity})`}</b> · {l.label}
                   </div>
                   {l.building && <div>{l.building}</div>}
+                  {l.rule && <div><i>{l.severity === 'ok' ? 'Passes: ' : 'Rule: '}{l.rule}</i></div>}
                   <div>{l.advice}</div>
                   {l.heightM != null && (
                     <div>
