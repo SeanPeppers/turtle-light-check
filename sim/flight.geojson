@@ -1,0 +1,1349 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9489632,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 1,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp01.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              432,
+              919,
+              484,
+              972
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9488829,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 2,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp02.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              434,
+              798,
+              484,
+              850
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9488027,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 3,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp03.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              436,
+              676,
+              484,
+              726
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9487224,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 4,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp04.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              436,
+              555,
+              484,
+              605
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              542,
+              929,
+              592,
+              981
+            ],
+            "light_type": "streetlight",
+            "severity": "medium",
+            "fix": "Please shield, lower wattage, or turn off this streetlight during nesting season to protect sea turtles."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9486421,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 5,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp05.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              436,
+              434,
+              484,
+              483
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              542,
+              836,
+              592,
+              888
+            ],
+            "light_type": "lit window",
+            "severity": "medium",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              548,
+              782,
+              590,
+              833
+            ],
+            "light_type": "streetlight",
+            "severity": "medium",
+            "fix": "Please shield, lower wattage, or turn off this streetlight during nesting season to protect sea turtles."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9485619,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 6,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp06.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              438,
+              311,
+              484,
+              362
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              327,
+              886,
+              375,
+              937
+            ],
+            "light_type": "lit window",
+            "severity": "medium",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              544,
+              714,
+              592,
+              767
+            ],
+            "light_type": "lit window",
+            "severity": "medium",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              552,
+              634,
+              592,
+              686
+            ],
+            "light_type": "streetlight",
+            "severity": "medium",
+            "fix": "Please shield, lower wattage, or turn off this streetlight during nesting season to protect sea turtles."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9484816,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 7,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp07.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              438,
+              189,
+              484,
+              239
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              327,
+              760,
+              375,
+              810
+            ],
+            "light_type": "lit window",
+            "severity": "medium",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              544,
+              593,
+              592,
+              646
+            ],
+            "light_type": "lit window",
+            "severity": "medium",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              550,
+              487,
+              598,
+              539
+            ],
+            "light_type": "streetlight",
+            "severity": "medium",
+            "fix": "Please shield, lower wattage, or turn off this streetlight during nesting season to protect sea turtles."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9484013,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 8,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp08.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              430,
+              67,
+              484,
+              119
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              325,
+              638,
+              375,
+              690
+            ],
+            "light_type": "lit window",
+            "severity": "medium",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              542,
+              471,
+              592,
+              523
+            ],
+            "light_type": "lit window",
+            "severity": "medium",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              550,
+              338,
+              566,
+              365
+            ],
+            "light_type": "streetlight",
+            "severity": "medium",
+            "fix": "Please shield, lower wattage, or turn off this streetlight during nesting season to protect sea turtles."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9483211,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 9,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp09.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              325,
+              516,
+              375,
+              568
+            ],
+            "light_type": "lit window",
+            "severity": "medium",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              540,
+              349,
+              592,
+              401
+            ],
+            "light_type": "lit window",
+            "severity": "medium",
+            "fix": "Please turn off interior lights or close blackout curtains so hatchlings won't become disoriented."
+          },
+          {
+            "box_2d": [
+              552,
+              189,
+              566,
+              218
+            ],
+            "light_type": "streetlight",
+            "severity": "medium",
+            "fix": "Please shield, lower wattage, or turn off this streetlight during nesting season to protect sea turtles."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9482408,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 10,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp10.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              550,
+              38,
+              567,
+              72
+            ],
+            "light_type": "street light head",
+            "severity": "medium",
+            "fix": "Please shield or lower the wattage of this street light to prevent it from glowing toward the nesting beach."
+          },
+          {
+            "box_2d": [
+              543,
+              226,
+              593,
+              278
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              326,
+              394,
+              377,
+              446
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9481605,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 11,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp11.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              542,
+              104,
+              593,
+              156
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              328,
+              272,
+              376,
+              324
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9480803,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 12,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp12.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              542,
+              0,
+              592,
+              34
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              328,
+              151,
+              376,
+              202
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              550,
+              929,
+              567,
+              962
+            ],
+            "light_type": "street light head",
+            "severity": "medium",
+            "fix": "Please shield or lower the wattage of this street light to prevent it from glowing toward the nesting beach."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.948,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 13,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp13.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              328,
+              28,
+              376,
+              79
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              550,
+              782,
+              567,
+              811
+            ],
+            "light_type": "street light head",
+            "severity": "medium",
+            "fix": "Please shield or lower the wattage of this street light to prevent it from glowing toward the nesting beach."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9479197,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 14,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp14.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              435,
+              881,
+              483,
+              932
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              650,
+              966,
+              699,
+              1000
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              550,
+              635,
+              567,
+              663
+            ],
+            "light_type": "street light head",
+            "severity": "medium",
+            "fix": "Please shield or lower the wattage of this street light to prevent it from glowing toward the nesting beach."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9478395,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 15,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp15.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              435,
+              759,
+              483,
+              810
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              650,
+              844,
+              700,
+              896
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              550,
+              488,
+              567,
+              510
+            ],
+            "light_type": "street light head",
+            "severity": "medium",
+            "fix": "Please shield or lower the wattage of this street light to prevent it from glowing toward the nesting beach."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9477592,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 16,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp16.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              435,
+              637,
+              483,
+              689
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              650,
+              722,
+              700,
+              773
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              550,
+              338,
+              567,
+              365
+            ],
+            "light_type": "street light head",
+            "severity": "medium",
+            "fix": "Please shield or lower the wattage of this street light to prevent it from glowing toward the nesting beach."
+          },
+          {
+            "box_2d": [
+              550,
+              929,
+              567,
+              962
+            ],
+            "light_type": "street light head",
+            "severity": "medium",
+            "fix": "Please shield or lower the wattage of this street light to prevent it from glowing toward the nesting beach."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9476789,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 17,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp17.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              326,
+              919,
+              376,
+              972
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              435,
+              515,
+              483,
+              568
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              650,
+              600,
+              700,
+              652
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              550,
+              189,
+              567,
+              218
+            ],
+            "light_type": "street light head",
+            "severity": "medium",
+            "fix": "Please shield or lower the wattage of this street light to prevent it from glowing toward the nesting beach."
+          },
+          {
+            "box_2d": [
+              550,
+              782,
+              567,
+              811
+            ],
+            "light_type": "street light head",
+            "severity": "medium",
+            "fix": "Please shield or lower the wattage of this street light to prevent it from glowing toward the nesting beach."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9475987,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 18,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp18.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              326,
+              798,
+              376,
+              850
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              435,
+              394,
+              483,
+              446
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              650,
+              478,
+              700,
+              529
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install dark-colored blackout blinds or curtains on this window and keep them closed at night."
+          },
+          {
+            "box_2d": [
+              550,
+              38,
+              567,
+              72
+            ],
+            "light_type": "street light head",
+            "severity": "medium",
+            "fix": "Please shield or lower the wattage of this street light to prevent it from glowing toward the nesting beach."
+          },
+          {
+            "box_2d": [
+              550,
+              635,
+              567,
+              663
+            ],
+            "light_type": "street light head",
+            "severity": "medium",
+            "fix": "Please shield or lower the wattage of this street light to prevent it from glowing toward the nesting beach."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9475184,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 19,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp19.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              431,
+              270,
+              485,
+              325
+            ],
+            "light_type": "lit window",
+            "severity": "medium",
+            "fix": "Please turn off interior lights or close window blinds facing the beach to prevent disorienting sea turtle hatchlings."
+          },
+          {
+            "box_2d": [
+              648,
+              353,
+              704,
+              409
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please install window tint or blackout curtains to block this bright ground-level light from reaching the nesting beach."
+          },
+          {
+            "box_2d": [
+              326,
+              674,
+              377,
+              729
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please turn off interior lighting in this upper-floor room visible directly from the dunes."
+          },
+          {
+            "box_2d": [
+              552,
+              487,
+              567,
+              513
+            ],
+            "light_type": "streetlight",
+            "severity": "medium",
+            "fix": "Please shield this fixture with a downward-directed, amber-colored LED to eliminate beach glow."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9474381,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 20,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp20.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              431,
+              149,
+              485,
+              204
+            ],
+            "light_type": "lit window",
+            "severity": "medium",
+            "fix": "Please turn off this light or close blinds to protect nesting sea turtles."
+          },
+          {
+            "box_2d": [
+              648,
+              233,
+              704,
+              288
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please shield or turn off this bright ground-floor window light visible from the shore."
+          },
+          {
+            "box_2d": [
+              326,
+              553,
+              377,
+              608
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please close blinds or turn off the lights in this room facing the beach."
+          },
+          {
+            "box_2d": [
+              552,
+              337,
+              567,
+              366
+            ],
+            "light_type": "streetlight",
+            "severity": "medium",
+            "fix": "Please replace this streetlamp with a turtle-friendly amber bulb and proper down-shielding."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9473579,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 21,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp21.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              431,
+              27,
+              485,
+              82
+            ],
+            "light_type": "lit window",
+            "severity": "medium",
+            "fix": "Please turn off interior lights or close blinds to keep light off the nesting beach."
+          },
+          {
+            "box_2d": [
+              648,
+              111,
+              704,
+              166
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please apply window tint or turn off this bright lower-level light source."
+          },
+          {
+            "box_2d": [
+              326,
+              431,
+              377,
+              486
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please turn off or shade this brightly lit window overlooking the dunes."
+          },
+          {
+            "box_2d": [
+              552,
+              188,
+              567,
+              218
+            ],
+            "light_type": "streetlight",
+            "severity": "medium",
+            "fix": "Please shield this pole-mounted light to prevent light pollution toward the ocean."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9472776,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 22,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp22.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              648,
+              0,
+              704,
+              43
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please close blinds or turn off this ground-floor light visible to hatchlings."
+          },
+          {
+            "box_2d": [
+              326,
+              309,
+              377,
+              364
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please turn off or shield this lit window facing the beach."
+          },
+          {
+            "box_2d": [
+              552,
+              39,
+              567,
+              72
+            ],
+            "light_type": "streetlight",
+            "severity": "medium",
+            "fix": "Please install a down-shield and amber LED on this streetlamp."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9471973,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 23,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp23.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              326,
+              188,
+              377,
+              243
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please close blinds or turn off this room's light facing the nesting beach."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9471171,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 24,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp24.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": [
+          {
+            "box_2d": [
+              326,
+              67,
+              377,
+              122
+            ],
+            "light_type": "lit window",
+            "severity": "high",
+            "fix": "Please turn off or shield this bright window light visible from the shoreline."
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.9470368,
+          26.4499461
+        ]
+      },
+      "properties": {
+        "waypoint": 25,
+        "altitude_m": 9.0,
+        "heading_deg": 0.0,
+        "hfov_deg": 80.21,
+        "image": "captures/wp25.png",
+        "image_size": [
+          1280,
+          720
+        ],
+        "detections": []
+      }
+    }
+  ]
+}
