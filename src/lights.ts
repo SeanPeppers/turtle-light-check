@@ -25,11 +25,12 @@ export type Light = { label: string; box_2d: [number, number, number, number]; p
 export type Shadow = { box_2d: [number, number, number, number]; description: string }
 export type Result = { lights: Light[]; shadows?: Shadow[]; summary: string; model?: string }
 
+// Okabe-Ito colorblind-safe palette: no red/green pair, readable with any color vision.
 export const SEVERITY_COLOR: Record<Severity, string> = {
-  high: '#ff3b30',
-  medium: '#ff9500',
-  low: '#ffcc00',
-  ok: '#34c759',
+  high: '#D55E00', // vermillion
+  medium: '#E69F00', // orange
+  low: '#F0E442', // yellow
+  ok: '#0072B2', // blue
 }
 
 /** Photo result -> map lights. All lights in one photo share the photo's GPS, so spread

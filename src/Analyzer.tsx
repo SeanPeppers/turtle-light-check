@@ -42,7 +42,7 @@ export default function Analyzer({ onResult }: { onResult?: (result: Result, fil
         const y = (y1 / 1000) * img.height
         const w = ((x2 - x1) / 1000) * img.width
         const h = ((y2 - y1) / 1000) * img.height
-        ctx.strokeStyle = ctx.fillStyle = l.possibleIssue ? '#ff5a5a' : '#4ade80'
+        ctx.strokeStyle = ctx.fillStyle = l.possibleIssue ? '#FF7A1A' : '#56B4E9' // Okabe-Ito vermillion / sky blue, brightened for dark photos
         ctx.strokeRect(x, y, w, h)
         ctx.fillText(l.label, x, Math.max(y - 6, 18))
       }
