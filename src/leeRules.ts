@@ -1,13 +1,13 @@
 // Lee County Land Development Code, Ch. 14, Art. II, Div. 2 (Sea Turtle Conservation)
 // and the county's Sea Turtle Conservation page. Shown next to results and fed to Gemini.
 export const LEE_RULES = [
-  { code: 'LDC 14-73(a)(2)(a)', text: 'A shadow cast by artificial lighting on an object is a rebuttable presumption of a violation.' },
-  { code: 'LDC 14-76(d)', text: 'Exterior fixtures must be long wavelength, downward directed, full cutoff, fully shielded.' },
-  { code: 'LDC 14-72', text: 'Long wavelength = 560 nm or greater (amber, orange, red). The county page cites 570 nm; 25 W yellow bug bulbs allowed.' },
-  { code: 'LDC 14-72', text: 'Fully shielded = the bulb, lamp or glowing lens is not directly visible.' },
-  { code: 'LDC 14-76(c)', text: 'New construction glass: inside-to-outside light transmittance of 45% or less.' },
-  { code: 'LDC 14-79', text: 'Minimize interior light from doors and windows within line of sight of the beach (close blinds).' },
-  { code: 'Lee County', text: 'Turn off decorative uplighting on buildings and landscaping.' },
+  { code: 'LDC 14-73(a)(2)(a)', text: 'If your light casts a shadow on the beach, the county assumes it breaks the rules unless you prove otherwise.' },
+  { code: 'LDC 14-76(d)', text: 'Outdoor lights need to be amber, orange or red, point down, and have the bulb fully covered.' },
+  { code: 'LDC 14-72', text: '"Long wavelength" means 560 nm or higher: amber, orange or red. (The county website says 570 nm.) 25 W yellow bug bulbs are fine.' },
+  { code: 'LDC 14-72', text: "\"Fully shielded\" means you can't see the bulb or the glowing lens from the beach." },
+  { code: 'LDC 14-76(c)', text: 'Windows on new buildings must be tinted to let out 45% of indoor light or less.' },
+  { code: 'LDC 14-79', text: 'Keep indoor light from spilling onto the beach. Close the blinds at night.' },
+  { code: 'Lee County', text: 'Turn off decorative uplights on buildings and palm trees.' },
 ] as const
 
 export const FWC_HOTLINE = '888-404-3922'
@@ -23,8 +23,8 @@ export function nestingStatus(now = new Date()) {
     active: inSeason && inHours,
     label: inSeason
       ? inHours
-        ? 'Nesting season rules are in effect right now (9 pm – 7 am).'
-        : 'Nesting season: rules apply tonight from 9 pm to 7 am.'
-      : 'Off-season. Nesting season runs May 1 – Oct 31, 9 pm – 7 am.',
+        ? "It's nesting season and it's after 9 pm, so beach-facing lights should be off or shielded right now."
+        : "It's nesting season. The lighting rules kick in at 9 pm tonight."
+      : "Nesting season is over for this year. It starts again May 1, and the rules apply 9 pm to 7 am.",
   }
 }

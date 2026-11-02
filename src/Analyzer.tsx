@@ -72,11 +72,11 @@ export default function Analyzer({ onResult }: { onResult?: (result: Result, fil
         body: JSON.stringify({ image: await toUploadBase64(f), mimeType: 'image/jpeg' }),
       })
       const data = await r.json()
-      if (!r.ok) throw new Error(data.error ?? 'Analysis failed')
+      if (!r.ok) throw new Error(data.error ?? 'Something went wrong. Try that photo again.')
       setResult(data)
       onResult?.(data, f)
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Analysis failed')
+      setError(e instanceof Error ? e.message : 'Something went wrong. Try that photo again.')
     } finally {
       setBusy(false)
     }
@@ -86,10 +86,10 @@ export default function Analyzer({ onResult }: { onResult?: (result: Result, fil
     <section id="check" className="analyzer card">
       <h2>Check your lights</h2>
       <p className="muted">
-        {nestingStatus().label} Report a disoriented turtle to FWC: <a href={`tel:${FWC_HOTLINE}`}>{FWC_HOTLINE}</a>
+        {nestingStatus().label} See a turtle heading the wrong way? Call FWC at <a href={`tel:${FWC_HOTLINE}`}>{FWC_HOTLINE}</a>.
       </p>
       <label className="upload">
-        <Upload aria-hidden /> Choose or take a night photo
+        <Upload aria-hidden /> Snap or upload a night photo
         <input
           type="file"
           accept="image/*"
@@ -99,7 +99,7 @@ export default function Analyzer({ onResult }: { onResult?: (result: Result, fil
       </label>
       {busy && (
         <p role="status">
-          <Loader2 className="spin" aria-hidden /> Analyzing…
+          <Loader2 className="spin" aria-hidden /> Looking for lights…
         </p>
       )}
       {error && <p role="alert">{error}</p>}
@@ -118,17 +118,17 @@ export default function Analyzer({ onResult }: { onResult?: (result: Result, fil
           </ul>
           {!!result.shadows?.length && (
             <p className="shadow-note">
-              <AlertTriangle aria-hidden /> <strong>Shadow from artificial light detected</strong>
-              {' '}({result.shadows.map((s) => s.description).join('; ')}). Under LDC 14-73(a)(2)(a) a shadow cast by
-              artificial lighting is a rebuttable presumption of a violation.
+              <AlertTriangle aria-hidden /> <strong>Your light is casting a shadow</strong>
+              {' '}({result.shadows.map((s) => s.description).join('; ')}). Lee County treats that as a likely violation
+              unless you can show otherwise (LDC 14-73(a)(2)(a)). Shielding or dimming the light usually fixes it.
             </p>
           )}
           <small>
-            Results are AI estimates, not a code-enforcement finding. Confirm against current Lee County
-            turtle-lighting rules.
+            This is a heads-up, not a ticket. Double-check against Lee County's lighting rules before you
+            buy new fixtures.
           </small>
           <details className="rules">
-            <summary>Lee County rules this check uses</summary>
+            <summary>The Lee County rules we check against</summary>
             <ul>
               {LEE_RULES.map((r, i) => (
                 <li key={i}>

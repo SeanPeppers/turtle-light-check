@@ -2,10 +2,11 @@
    Accent = turtle-safe amber (the color the app recommends). */
 :root {
   color-scheme: dark;
-  --amber: #ffb547; --amber-deep: #e8902a; --ink: #eef5ff; --muted: #b9c9da;
+  --amber: #ffb547; --amber-deep: #e8902a; --ink: #ffffff; --muted: #e4eefa;
   --glass: rgb(8 18 34 / 0.28); --glass-edge: rgb(255 255 255 / 0.14);
-  --legible: 0 1px 2px rgb(0 0 0 / 0.85), 0 2px 14px rgb(0 0 0 / 0.55);
-  font-family: Inter, system-ui, sans-serif; background: #050d1a; color: var(--ink);
+  /* dark halo + soft glow: keeps light text readable over bright sand, moon and windows */
+  --legible: 0 0 1px rgb(0 0 0 / 0.95), 0 1px 3px rgb(0 0 0 / 0.95), 0 0 10px rgb(2 8 20 / 0.9), 0 0 24px rgb(2 8 20 / 0.7);
+  font-family: Fredoka, system-ui, sans-serif; background: #050d1a; color: var(--ink);
 }
 body { margin: 0; }
 .hero-3d { position: fixed; inset: 0; z-index: -1; }
@@ -70,3 +71,12 @@ a { color: #9fd8ff; }
 
 .leaflet-popup-content { text-shadow: none; }
 @media (max-width: 600px) { .card { padding: 1.25rem; margin: 0 0.75rem 2rem; } }
+
+/* readable body text everywhere (headings keep their own look) */
+.card p, .card li, .card small, .card summary, .card label, .hero-text p { text-shadow: var(--legible); font-weight: 500; }
+.card a, .muted a { color: #ffd38a; font-weight: 600; }
+.rule { color: #ffc2bc; font-weight: 600; }
+.lightmap-bar { text-shadow: var(--legible); font-weight: 500; }
+.leaflet-container { font-family: Fredoka, system-ui, sans-serif; }
+.leaflet-popup-content, .leaflet-popup-content * { text-shadow: none; color: #13202e; }
+.card .upload, .card .upload *, .hero-text .btn { text-shadow: none; }

@@ -53,7 +53,7 @@ export default function App() {
       <header className="hero">
         <div className="hero-text">
           <h1>Turtle Light Check</h1>
-          <p>Hatchlings crawl toward the brightest horizon. Find the lights that lead them astray on Sanibel and Fort Myers Beach.</p>
+          <p>Baby sea turtles crawl toward the brightest thing they can see. That should be the moon over the Gulf, not your porch light.</p>
           <a className="btn" href="#check">
             Check a photo <ChevronDown aria-hidden />
           </a>
@@ -63,7 +63,7 @@ export default function App() {
       <div className="analyzer card">
         <h2>Beach light map</h2>
         <p className="muted">
-          Drone patrol results{SIM_IS_SAMPLE && ' (sample data until the sim writes sim/detections.geojson)'} plus every photo you check.
+          Our drone flew the beach by the Fort Myers Beach pier and pinned every light it could see from the sand.{SIM_IS_SAMPLE && ' (Sample data for now.)'} Photos you check show up here too.
         </p>
         <LightMap
           lights={[...SIM_LIGHTS, ...photoLights]}

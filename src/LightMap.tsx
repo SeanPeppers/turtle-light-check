@@ -46,7 +46,7 @@ export default function LightMap({ lights, dronePath = [], placing, onPlace, foc
             <i style={{ background: 'cyan' }} /> drone path
           </span>
         )}
-        {placing && <strong className="lightmap-place">No GPS in that photo. Click the map where you took it.</strong>}
+        {placing && <strong className="lightmap-place">That photo didn't have a location. Tap the map where you took it.</strong>}
       </div>
       <MapContainer center={CENTER} zoom={18} maxZoom={20} className={`lightmap-map${placing ? ' placing' : ''}`}>
         <TileLayer url={SAT} attribution="Tiles © Esri" maxZoom={20} maxNativeZoom={19} />
@@ -84,14 +84,14 @@ export default function LightMap({ lights, dronePath = [], placing, onPlace, foc
                   {l.heightM != null && (
                     <div>
                       {l.heightM.toFixed(1)} m high
-                      {l.distanceM != null && ` · ${Math.round(l.distanceM)} m inland from the drone`}
+                      {l.distanceM != null && ` · ${Math.round(l.distanceM)} m back from the beach`}
                     </div>
                   )}
                   <small>
                     {l.source === 'drone'
-                      ? `Drone · ${l.views?.length ? `triangulated from ${l.views.length} views` : `waypoint ${l.waypoint ?? '?'}`}`
-                      : 'Phone photo'}
-                    {l.notify && ` · notify ${l.notify}`}
+                      ? `Spotted by the drone${l.views?.length ? ` from ${l.views.length} spots along the beach` : ''}`
+                      : 'From a photo you checked'}
+                    {l.notify && ` · who to tell: ${l.notify === 'city' ? 'the city' : 'the resident'}`}
                   </small>
                 </Popup>
               </CircleMarker>
