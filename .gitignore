@@ -35,7 +35,6 @@ node_modules/
 dist/
 frames/
 
-sim/captures/
 
 # team uses pnpm-lock.yaml; ignore npm lockfile if someone runs npm install
 package-lock.json
