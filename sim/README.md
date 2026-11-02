@@ -4,7 +4,15 @@ A simulated drone flies along a beach at night, facing inland, and photographs t
 
 The beach is placed at its real location: the sand in front of the Lani Kai, next to the Fort Myers Beach pier, with the shore angled the way it really runs (125 degrees, south-east). The buildings are synthetic.
 
-Last full run: 9 of 9 lit lights found, 1 false alarm, 0.16 m mean location error, 3 Gemini requests. Gemini's answers vary a little between runs; the previous run had 0 false alarms.
+## Lee County rules the sim checks
+
+- Lights directly visible from the beach are violations.
+- Turtle glass: one lit unit (Condo 3 unit 202) is behind tinted glass with 45% or less visible light transmittance (Fort Myers Beach requires 45% or less plus window coverings, per the town's Sea Turtles page). Gemini is told the rule and marks it compliant; it is shown green and nobody is notified.
+- Shadow rule (not reported yet): Lee County LDC 14-73 makes a shadow cast by artificial lighting on an object in sea turtle nesting habitat during nesting season a rebuttable presumption of a violation. The scene has a rooftop floodlight on Condo 4 throwing a beach umbrella's shadow onto the sand, and Gemini is asked to report shadows, but their positions are not located yet: the shadow sits at the bottom edge of the drone's frame, where boxes get clipped. Gemini's raw shadow reports stay in `flight.geojson`. The floodlight itself is caught as a violation.
+
+Nesting season is May 1 to October 31, 9 p.m. to 7 a.m. The code section wording was taken from secondary sources because the county site blocked automated access, so check it against the county code before citing.
+
+Last full run: 10 of 10 violating lights found, 0 false alarms, 0.56 m mean location error; the turtle-glass window marked compliant and not flagged; 3 Gemini requests. Gemini's answers vary a little between runs.
 
 ## Output for the Leaflet map
 
@@ -16,9 +24,12 @@ All files are committed, so the map can be built without running Gazebo. Coordin
 |---|---|
 | `id` | stable id, e.g. `condo-2-unit-403` or `streetlight-1` |
 | `building`, `unit` | where the light is; `unit` is null for public lights |
-| `notify` | `resident` for private property, `city` for public lighting |
-| `light_type`, `severity`, `fix` | Gemini's description, `high`/`medium`/`low`, and a one-sentence fix |
-| `height_m` | height of the light above the sand |
+| `kind` | `light` (shadows are not reported yet) |
+| `compliant` | true for lights that meet the rules, e.g. turtle glass |
+| `rule` | the rule Gemini says the item breaks or meets |
+| `notify` | `resident` for private property, `city` for public lighting, null for compliant lights |
+| `light_type`, `severity`, `fix` | Gemini's description, `high`/`medium`/`low` (or `ok` for compliant lights; the map shows `ok` green), and a one-sentence fix |
+| `height_m`, `method` | height above the sand, and `triangulated` |
 | `distance_from_drone_m` | distance inland from the flight line |
 | `image`, `box_2d` | best photo of the light and its box in that photo |
 | `views` | every photo the light was triangulated from (see below) |
