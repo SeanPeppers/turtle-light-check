@@ -5,7 +5,7 @@ import Analyzer from './Analyzer'
 import LightMap from './LightMap'
 import { gpsFromPhoto } from './geo'
 import { photoToMapLights, type MapLight, type Result } from './lights'
-import { SIM_LIGHTS, SIM_IS_SAMPLE } from './simData'
+import { DRONE_PATH, SIM_LIGHTS, SIM_IS_SAMPLE } from './simData'
 
 const Hero3D = lazy(() => import('./Hero3D'))
 
@@ -66,6 +66,7 @@ export default function App() {
         </p>
         <LightMap
           lights={[...SIM_LIGHTS, ...photoLights]}
+          dronePath={DRONE_PATH}
           placing={!!pending}
           focus={focus}
           onPlace={(at) => {

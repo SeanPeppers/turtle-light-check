@@ -14,6 +14,10 @@ export type MapLight = {
   notify?: 'resident' | 'city'
   building?: string
   waypoint?: number
+  heightM?: number
+  distanceM?: number
+  /** drone positions [lat, lng] this light was triangulated from (draw sight lines to it) */
+  views?: [number, number][]
 }
 
 // Shape returned by api/analyze.ts
@@ -59,6 +63,9 @@ type SimFeature = {
     notify?: 'resident' | 'city'
     image?: string
     waypoint?: number
+    height_m?: number
+    distance_from_drone_m?: number
+    views?: { waypoint: number; image: string; drone: [number, number, number] }[]
   }
 }
 
@@ -79,8 +86,18 @@ export function simToMapLights(geo: { features: SimFeature[] }, images: Record<s
         source: 'drone',
         notify: p.notify,
         building: [p.building, p.unit].filter(Boolean).join(' · ') || undefined,
-        waypoint: p.waypoint,
+        waypoint: p.waypoint ?? p.views?.find((v) => v.image === p.image)?.waypoint,
+        heightM: p.height_m,
+        distanceM: p.distance_from_drone_m,
+        views: p.views?.map((v) => [v.drone[1], v.drone[0]] as [number, number]),
         image: p.image ? images[`../sim/${p.image}`] : undefined,
       }
     })
+}
+
+/** sim/flight.geojson (one Point per waypoint) -> drone path [lat, lng][] in flight order */
+export function flightToPath(geo: { features: { geometry: { coordinates: [number, number] }; properties: { waypoint: number } }[] }) {
+  return [...geo.features]
+    .sort((a, b) => a.properties.waypoint - b.properties.waypoint)
+    .map((f) => [f.geometry.coordinates[1], f.geometry.coordinates[0]] as [number, number])
 }
