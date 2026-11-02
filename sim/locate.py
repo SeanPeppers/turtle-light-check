@@ -169,3 +169,4 @@ def nearest_fixture(point, fixtures, max_m=4.0):
     """
     best = min(fixtures, key=lambda f: math.dist(f["pos"], point))
     return best if math.dist(best["pos"], point) <= max_m else None
+

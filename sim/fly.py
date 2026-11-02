@@ -38,21 +38,45 @@ CAPTURES = HERE / "captures"
 BATCH_SIZE = 9  # images per Gemini request; the free tier allows 20 requests per model per day
 CACHE = CAPTURES / "gemini_cache.json"
 
-PROMPT = """These are {n} night photos, in order, taken by a drone flying along a Florida nesting beach and looking inland at the buildings behind the dunes.
-Sea turtle hatchlings crawl toward bright light instead of the ocean, so any artificial light visible from the beach is a problem.
+PROMPT = """These are {n} night photos, in order, taken by a drone flying along a Fort Myers Beach (Lee County, Florida) sea turtle nesting beach during nesting season, looking inland across the sand at the buildings behind the dunes.
+Sea turtle hatchlings crawl toward artificial light instead of the ocean. Judge each photo by these local rules:
+- Any artificial light source directly visible from the beach is a violation.
+- A window lit from inside but glazed with tinted "turtle glass" (45 percent visible light transmittance or less) is compliant. It shows as a dim bronze or amber glow, far darker than a normal lit window.
+- Shadow rule (Lee County LDC 14-73): a shadow cast by artificial lighting on an object in nesting habitat (the sand seaward of the dunes) is a presumed violation, even when the light itself is out of frame.
 
-In each photo, find every artificial light source (lit windows, balcony or patio lights, streetlights, floodlights).
-Ignore dark windows and the moon. Draw one tight box around only the glowing part of each light (the lit window pane, or the lamp head of a streetlight, never its pole), in that photo's own coordinates.
+Report two kinds of items in each photo:
+- "light": every artificial light source (lit windows, balcony or patio lights, streetlights, floodlights). Ignore dark windows and the moon. Objects on the sand, such as beach umbrellas or chairs, are never lights. Draw one tight box around only the glowing part (the lit window pane, or the lamp head, never a pole).
+- "shadow": every shadow on the sand cast by artificial light. Draw the box around the shadow itself.
 
-Return JSON: {{"images": [{{"index": 0, "lights": [...]}}, ...]}} with one entry per photo, index 0 to {last}.
-Each light has:
-- "box_2d": [ymin, xmin, ymax, xmax] scaled 0 to 1000
-- "light_type": short description, e.g. "lit window, no blinds"
-- "severity": "high", "medium" or "low" (how visible and bright it is from the beach)
-- "fix": one sentence, written to whoever controls the light
+Return JSON: {{"images": [{{"index": 0, "lights": [...]}}, ...]}} with one entry per photo, index 0 to {last}. Both kinds go in "lights".
+Each item has:
+- "kind": "light" or "shadow"
+- "box_2d": [ymin, xmin, ymax, xmax] scaled 0 to 1000, in that photo's own coordinates
+- "light_type": short description, e.g. "lit window, no blinds", "window behind turtle glass", "shadow of beach umbrella on the sand"
+- "compliant": true only for lights that meet the rules (such as turtle glass), otherwise false
+- "severity": "high", "medium" or "low" for violations (how visible and bright from the beach); "ok" when compliant
+- "rule": the rule it breaks or meets, in a few words
+- "fix": one sentence, written to whoever controls the light (for a compliant light, say that no action is needed)
 """
 
-SEVERITY_RANK = {"high": 3, "medium": 2, "low": 1}
+SEVERITY_RANK = {"high": 3, "medium": 2, "low": 1, "ok": 0}
+
+
+def is_shadow(d):
+    return d.get("kind") == "shadow"
+
+
+def is_compliant(d):
+    return not is_shadow(d) and d.get("compliant") is True
+
+
+def is_violation(d):
+    return not is_shadow(d) and not is_compliant(d)
+
+
+def subset(frames, keep):
+    """Frames with only the detections that pass keep(); detection indices refer to the subset."""
+    return [{**f, "detections": [d for d in f["detections"] if keep(d)]} for f in frames]
 
 
 class Drone:
@@ -221,6 +245,7 @@ def view(frame, det):
 
 
 def write_geojson(frames, lights, fixtures):
+    """lights: find_all() output."""
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
 
     track = [
@@ -241,6 +266,13 @@ def write_geojson(frames, lights, fixtures):
     ]
     (HERE / "flight.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": track}, indent=2))
 
+    features = light_features(subset(frames, is_violation), lights["violations"], fixtures, now)
+    features += light_features(subset(frames, is_compliant), lights["compliant"], fixtures, now, compliant=True)
+    (HERE / "detections.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": features}, indent=2))
+    return features
+
+
+def light_features(frames, lights, fixtures, now, compliant=False):
     features, ids = [], set()
     for n, light in enumerate(lights, start=1):
         x, y, z = light["point"]
@@ -263,13 +295,16 @@ def write_geojson(frames, lights, fixtures):
                 "geometry": {"type": "Point", "coordinates": [round(lon, 7), round(lat, 7)]},
                 "properties": {
                     "id": fid,
+                    "kind": "light",
                     "building": fx["building"] if fx else "unknown",
                     "unit": fx["unit"] if fx else None,
                     "light_type": light_type,
-                    "severity": worst.get("severity", "medium"),
+                    "compliant": compliant,
+                    "severity": "ok" if compliant else worst.get("severity", "medium"),
+                    "rule": worst.get("rule", ""),
                     "visible_from_beach": True,
                     "fix": worst.get("fix", ""),
-                    "notify": fx["notify"] if fx else "city",
+                    "notify": None if compliant else (fx["notify"] if fx else "city"),
                     "height_m": round(z, 1),
                     "distance_from_drone_m": round(y - scene.DRONE_Y, 1),
                     "method": "triangulated",
@@ -280,8 +315,20 @@ def write_geojson(frames, lights, fixtures):
                 },
             }
         )
-    (HERE / "detections.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": features}, indent=2))
     return features
+
+
+def find_all(frames):
+    """Violating and compliant lights are triangulated separately.
+
+    Gemini also reports shadows on the sand (Lee County's shadow rule); they stay in
+    flight.geojson but are not located yet, because shadows at the bottom edge of the
+    frame get clipped boxes that scatter on the ground.
+    """
+    return {
+        "violations": locate.locate_lights(subset(frames, is_violation)),
+        "compliant": locate.locate_lights(subset(frames, is_compliant)),
+    }
 
 
 def main():
@@ -299,21 +346,31 @@ def main():
     finally:
         drone.close()
     detect(client, frames)
-    lights = locate.locate_lights(frames)
-    features = write_geojson(frames, lights, fixtures)
+    found = find_all(frames)
+    features = write_geojson(frames, found, fixtures)
 
-    truth = {f["id"]: f for f in fixtures if f["lit"]}
-    caught, errs = set(), []
-    for light in lights:
+    truth = {f["id"]: f for f in scene.violations()}
+    tinted = {f["id"] for f in fixtures if f["tinted"]}
+    caught, errs, flagged_tinted = set(), [], set()
+    for light in found["violations"]:
         fx = locate.nearest_fixture(light["point"], fixtures)
         if fx and fx["id"] in truth:
             caught.add(fx["id"])
             errs.append(math.dist(light["point"], fx["pos"]))
+        elif fx and fx["id"] in tinted:
+            flagged_tinted.add(fx["id"])
+    passed_violations = set()
+    for light in found["compliant"]:
+        fx = locate.nearest_fixture(light["point"], fixtures)
+        if fx and fx["id"] in truth:
+            passed_violations.add(fx["id"])
     mean_err = sum(errs) / len(errs) if errs else float("nan")
     print(
-        f"wrote flight.geojson ({len(frames)} waypoints) and detections.geojson ({len(features)} lights)\n"
-        f"caught {len(caught)}/{len(truth)} lit fixtures, {len(features) - len(errs)} unmatched or false, "
-        f"mean location error {mean_err:.2f} m"
+        f"wrote flight.geojson ({len(frames)} waypoints) and detections.geojson ({len(features)} features)\n"
+        f"violations: caught {len(caught)}/{len(truth)}, {len(found['violations']) - len(caught)} unmatched or false, "
+        f"mean location error {mean_err:.2f} m\n"
+        f"turtle glass: {len(found['compliant'])} marked compliant, {len(flagged_tinted)} wrongly flagged as violations, "
+        f"{len(passed_violations)} violations wrongly passed as compliant"
     )
     missed = sorted(set(truth) - caught)
     if missed:

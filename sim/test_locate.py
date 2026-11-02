@@ -71,6 +71,8 @@ def run_pipeline(noise_px, seed, drop=0.0, false_per_frame=0):
 
 
 all_lit = {f["id"] for f in lit}
+SEEDS = 20
+TOTAL = SEEDS * len(lit)  # light-seed pairs per sweep
 
 # Perfect boxes: every lit fixture found exactly, nothing extra, no light built from two different sources.
 found, errs, mixed, false = run_pipeline(0.0, seed=0)
@@ -79,20 +81,20 @@ assert found == all_lit and false == 0 and mixed == 0 and max(errs) < 1e-6, (fou
 
 def sweep(label, max_err_m, max_missed=0, max_false=0, **kw):
     worst_err, worst_mixed, missed, false_total = 0.0, 0, 0, 0
-    for seed in range(20):
+    for seed in range(SEEDS):
         found, errs, mixed, false = run_pipeline(seed=seed, **kw)
         missed += len(all_lit - found)
         false_total += false
         worst_err = max([worst_err, *errs])
         worst_mixed = max(worst_mixed, mixed)
-    print(f"{label}: missed {missed}/{20 * len(lit)}, false {false_total}, worst error {worst_err:.2f} m, worst mixed {worst_mixed}")
+    print(f"{label}: missed {missed}/{TOTAL}, false {false_total}, worst error {worst_err:.2f} m, worst mixed {worst_mixed}")
     assert missed <= max_missed and false_total <= max_false and worst_err < max_err_m
 
 
 sweep("5 px jitter", 1.5, noise_px=5.0)
 # Heavier jitter, dropped boxes and invented boxes are stress levels: a few misses or extras out of 180 are allowed.
 sweep("10 px jitter", 2.0, noise_px=10.0)
-sweep("5 px jitter, Gemini misses 20% of boxes", 2.0, max_missed=6, noise_px=5.0, drop=0.2)
+sweep("5 px jitter, Gemini misses 20% of boxes", 2.0, max_missed=round(0.05 * TOTAL), noise_px=5.0, drop=0.2)  # at most 5% of light-seed pairs
 sweep("5 px jitter, 3 invented boxes per frame", 1.5, max_false=2, noise_px=5.0, false_per_frame=3)
 
 # World to lat/lon keeps distances and points +y inland (north-east at Fort Myers Beach).
@@ -106,3 +108,4 @@ assert lat < scene.ORIGIN_LAT and lon > scene.ORIGIN_LON  # along the shore is s
 x, y = scene.from_lat_lon(*scene.to_lat_lon(37.5, -12.25))
 assert abs(x - 37.5) < 1e-6 and abs(y + 12.25) < 1e-6
 print("ok")
+
