@@ -3,7 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { SpotLight, Stars, useAnimations, useFBX, useGLTF, useTexture } from '@react-three/drei'
 import { Bloom, EffectComposer, ToneMapping } from '@react-three/postprocessing'
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'
-import { Box3, CanvasTexture, MeshStandardMaterial, PlaneGeometry, RepeatWrapping, Vector2, Vector3, type Group, type MeshBasicMaterial, type Texture } from 'three'
+import { Box3, CanvasTexture, Mesh, MeshStandardMaterial, type Material, PlaneGeometry, RepeatWrapping, Vector2, Vector3, type Group, type MeshBasicMaterial, type Texture } from 'three'
 import { Water } from 'three/examples/jsm/objects/Water.js'
 
 // Moonlit night beach (when hatchlings emerge): dunes and a lit-up coastline at the top, surf at the bottom.
@@ -38,13 +38,30 @@ function heightAt(x: number, z: number) {
   return slope + bumps
 }
 
+const END_Z = 7.5 // just past the bottom edge of the screen
+const FADE_FROM = SHORE_Z + 2 // start fading once the turtle is swimming
+
 function Turtle({ url, x, z, speed, scale }: (typeof TURTLES)[number]) {
   const root = useRef<Group>(null)
   const gltf = useGLTF(url)
-  // SkeletonUtils.clone so each turtle gets its own skeleton from the shared GLB.
-  const model = useMemo(() => SkeletonUtils.clone(gltf.scene), [gltf.scene])
+  // SkeletonUtils.clone so each turtle gets its own skeleton; materials are cloned too so each can fade on its own.
+  const { model, mats } = useMemo(() => {
+    const m = SkeletonUtils.clone(gltf.scene)
+    const list: Material[] = []
+    const fadeable = (mat: Material) => {
+      const c = mat.clone()
+      c.transparent = true
+      list.push(c)
+      return c
+    }
+    m.traverse((o) => {
+      if (o instanceof Mesh) o.material = Array.isArray(o.material) ? o.material.map(fadeable) : fadeable(o.material)
+    })
+    return { model: m, mats: list }
+  }, [gltf.scene])
   const { actions, names } = useAnimations(gltf.animations, root)
-  const span = SHORE_Z + 0.5 - START_Z
+  const span = END_Z - START_Z
+  const swimming = useRef(false)
 
   useEffect(() => {
     const walk = actions[names.find((n) => /walk$/i.test(n)) ?? '']
@@ -54,10 +71,29 @@ function Turtle({ url, x, z, speed, scale }: (typeof TURTLES)[number]) {
   }, [actions, names, x])
 
   useFrame(({ clock }) => {
-    // Loop: once a turtle reaches the surf it reappears at the dunes. Follows the sand height.
+    // Loop: crawl down the beach, swim out through the surf, fade away, then reappear at the dunes.
     const g = root.current!
-    g.position.z = START_Z + ((z - START_Z + clock.elapsedTime * speed * 3) % span)
-    g.position.y = heightAt(x, g.position.z)
+    const pz = START_Z + ((z - START_Z + clock.elapsedTime * speed * 3) % span)
+    g.position.z = pz
+    // On sand follow the ground; in the water float just under the surface.
+    g.position.y = Math.max(heightAt(x, pz), -0.12)
+
+    // Walk on land, swim once in the water.
+    const inWater = pz > SHORE_Z + 0.6
+    if (inWater !== swimming.current) {
+      swimming.current = inWater
+      const walk = actions[names.find((n) => /walk$/i.test(n)) ?? '']
+      const swim = actions[names.find((n) => /swim$/i.test(n)) ?? '']
+      if (walk && swim) {
+        const [from, to] = inWater ? [walk, swim] : [swim, walk]
+        to.reset().play()
+        from.crossFadeTo(to, 0.6, false)
+      }
+    }
+
+    // Fade in at the dunes, fade out as it swims off the bottom of the page.
+    const opacity = Math.min(1, (pz - START_Z) / 1.5, (END_Z - pz) / (END_Z - FADE_FROM))
+    for (const m of mats) m.opacity = Math.max(0, opacity)
   })
   return (
     <group ref={root} position={[x, heightAt(x, z), z]} scale={scale}>
