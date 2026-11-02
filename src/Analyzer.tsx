@@ -2,13 +2,18 @@ import { useEffect, useRef, useState } from 'react'
 import { AlertTriangle, CheckCircle2, Loader2, Upload } from 'lucide-react'
 import type { Result } from './lights'
 
-const toBase64 = (f: File) =>
-  new Promise<string>((res, rej) => {
-    const r = new FileReader()
-    r.onload = () => res((r.result as string).split(',')[1])
-    r.onerror = () => rej(r.error)
-    r.readAsDataURL(f)
-  })
+// Shrink to <=1600px JPEG before upload: keeps requests under Vercel's 4.5 MB body limit
+// and makes Gemini faster. (GPS is read from the original file, not this copy.)
+async function toUploadBase64(f: File, maxSide = 1600): Promise<string> {
+  const bmp = await createImageBitmap(f, { imageOrientation: 'from-image' })
+  const scale = Math.min(1, maxSide / Math.max(bmp.width, bmp.height))
+  const c = document.createElement('canvas')
+  c.width = Math.round(bmp.width * scale)
+  c.height = Math.round(bmp.height * scale)
+  c.getContext('2d')!.drawImage(bmp, 0, 0, c.width, c.height)
+  bmp.close()
+  return c.toDataURL('image/jpeg', 0.85).split(',')[1]
+}
 
 export default function Analyzer({ onResult }: { onResult?: (result: Result, file: File) => void }) {
   const canvas = useRef<HTMLCanvasElement>(null)
@@ -54,7 +59,7 @@ export default function Analyzer({ onResult }: { onResult?: (result: Result, fil
       const r = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ image: await toBase64(f), mimeType: f.type }),
+        body: JSON.stringify({ image: await toUploadBase64(f), mimeType: 'image/jpeg' }),
       })
       const data = await r.json()
       if (!r.ok) throw new Error(data.error ?? 'Analysis failed')

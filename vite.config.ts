@@ -11,7 +11,8 @@ function devApi(): Plugin {
       server.middlewares.use('/api/analyze', async (req, res) => {
         const chunks: Buffer[] = []
         for await (const c of req) chunks.push(c as Buffer)
-        const { default: handler } = await server.ssrLoadModule('/api/analyze.ts')
+        const mod = await server.ssrLoadModule('/api/analyze.ts')
+        const handler = mod.POST
         const response: Response = await handler(
           new Request('http://localhost/api/analyze', {
             method: req.method,

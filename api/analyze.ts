@@ -15,8 +15,7 @@ const RETRYABLE = new Set([429, 500, 503])
 const TIMEOUT_MS = 20_000 // never let a busy model hang the demo
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
-export default async function handler(req: Request): Promise<Response> {
-  if (req.method !== 'POST') return new Response('POST only', { status: 405 })
+export async function POST(req: Request): Promise<Response> {
   const key = process.env.GEMINI_API_KEY
   if (!key) return Response.json({ error: 'GEMINI_API_KEY not set' }, { status: 500 })
 
@@ -60,3 +59,4 @@ export default async function handler(req: Request): Promise<Response> {
   }
   return Response.json({ error: 'Gemini request failed', status: lastStatus }, { status: 502 })
 }
+
