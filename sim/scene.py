@@ -55,6 +55,14 @@ def to_lat_lon(x: float, y: float) -> tuple[float, float]:
     return lat, lon
 
 
+def from_lat_lon(lat: float, lon: float) -> tuple[float, float]:
+    """Inverse of to_lat_lon: world (x, y) for a latitude and longitude."""
+    north = (lat - ORIGIN_LAT) * 111_320.0
+    east = (lon - ORIGIN_LON) * 111_320.0 * math.cos(math.radians(ORIGIN_LAT))
+    shore, inland = math.radians(SHORE_BEARING_DEG), math.radians(INLAND_BEARING_DEG)
+    return east * math.sin(shore) + north * math.cos(shore), east * math.sin(inland) + north * math.cos(inland)
+
+
 def fixtures() -> list[dict]:
     """Every light that could be seen from the beach, lit or not."""
     out = []
