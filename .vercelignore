@@ -1,0 +1,8 @@
+.env
+.env.*
+!.env.example
+backend/
+node_modules/
+dist/
+sim/demo.mp4
+sim/*.sdf

@@ -1,3 +1,43 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+.env*
+.vercel
+
+!.env.example
+.vercel
+textures-src
 .env
 __pycache__/
+.venv/
+venv/
+node_modules/
+dist/
+frames/
+
+
+# team uses pnpm-lock.yaml; ignore npm lockfile if someone runs npm install
+package-lock.json
 .chase_frames/
